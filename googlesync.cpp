@@ -44,7 +44,6 @@ void GoogleSync::startNextSync()
     {
         GoogleFileSync *fs = m_files.dequeue();
         connect(fs, &GoogleFileSync::completed, this, &GoogleSync::onComplete);
-        // connect(fs, &GoogleFileSync::completed, fs, &QObject::deleteLater);
 
         fs->start();
 
