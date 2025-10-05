@@ -53,7 +53,10 @@ QVariant GoogleFileSyncModel::data(const QModelIndex &index, int role) const
         case Columns::Path:
             return f->file().path();
         case Columns::Progress:
-            return QString("%1%").arg(f->progress());
+            if (f->state() == GoogleFileSync::SYNCING)
+                return QString("%1%").arg(f->progress());
+            else
+                return QString();
         case Columns::Status:
             return GoogleFileSync::toString(f->state());
         }
@@ -87,6 +90,73 @@ QVariant GoogleFileSyncModel::headerData(int section, Qt::Orientation orientatio
     }
 
     return QAbstractTableModel::headerData(section, orientation, role);
+}
+
+/**
+ * @brief Implements native sorting for the model.
+ */
+void GoogleFileSyncModel::sort(int column, Qt::SortOrder order)
+{
+    // 1. Prepare the model for a data change notification
+    beginResetModel();
+
+    // 2. Use std::sort with a custom comparison lambda
+    std::sort(m_files.begin(), m_files.end(),
+              [&](const GoogleFileSync *a, const GoogleFileSync *b) {
+
+                  if (!a && !b) return false;
+                  if (!a) return (order == Qt::AscendingOrder);
+                  if (!b) return (order != Qt::AscendingOrder);
+
+                  QString strA, strB;
+                  qint64 numA, numB;
+                  bool isNumeric = false;
+
+                  // Get the raw data for comparison based on column
+                  switch (column) {
+                  case Columns::Progress: // Sort by percentage
+                      isNumeric = true;
+                      numA = a->progress();
+                      numB = b->progress();
+                      break;
+                  case Columns::Name:
+                      isNumeric = false;
+                      strA = a->file().name();
+                      strB = b->file().name();
+                      break;
+                  case Columns::Path:
+                      isNumeric = false;
+                      strA = a->file().path();
+                      strB = b->file().path();
+                      break;
+                  case Columns::Status:
+                      isNumeric = true;
+                      numA = a->state();
+                      numB = b->state();
+                      break;
+                      // No default needed since all Columns are handled.
+                  }
+
+                  bool lessThan = false;
+                  if (isNumeric) {
+                      if (numA == numB) return false; // Explicitly handle equality
+                      bool lessThan = numA < numB;
+                      return (order == Qt::AscendingOrder) ? lessThan : !lessThan;
+                  } else {
+                      int comparisonResult = strA.localeAwareCompare(strB);
+
+                      if (comparisonResult == 0) return false; // Explicitly handle equality
+
+                      bool lessThan = comparisonResult < 0;
+                      return (order == Qt::AscendingOrder) ? lessThan : !lessThan;
+                  }
+
+                  // 4. Apply the sort order
+                  return (order == Qt::AscendingOrder) ? lessThan : !lessThan;
+              });
+
+    // 3. Notify the views that the data has been sorted
+    endResetModel();
 }
 
 void GoogleFileSyncModel::onFileSyncStatusUpdate()

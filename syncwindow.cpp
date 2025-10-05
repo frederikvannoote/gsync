@@ -32,6 +32,7 @@ SyncWindow::SyncWindow(GoogleAuthenticator &authenticator,
         model->setFiles(fs);
         ui->tableView->setModel(model);
         ui->tableView->setItemDelegateForColumn(GoogleFileSyncModel::Progress, new ProgressDelegate(ui->tableView));
+        ui->tableView->setSortingEnabled(true);
 
         ui->stackedWidget->setCurrentWidget(ui->sync);
     });
