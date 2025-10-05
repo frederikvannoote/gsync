@@ -93,7 +93,7 @@ void GoogleDrive::retrieveFiles(const QString &pageToken)
     QUrl driveUrl("https://www.googleapis.com/drive/v3/files");
     QUrlQuery query;
     // Limit results to 10 for a simple test
-    query.addQueryItem("pageSize", "100");
+    query.addQueryItem("pageSize", "1000");
     if (!pageToken.isEmpty())
         query.addQueryItem("pageToken", pageToken);
     query.addQueryItem("fields", "nextPageToken, files(id, name, mimeType, size, md5Checksum, parents)");
