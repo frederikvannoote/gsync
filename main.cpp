@@ -8,9 +8,6 @@
 #include "googlefilelist.h"
 #include "googlesync.h"
 
-// You must set up a "Desktop App" OAuth client.
-const QString CLIENT_ID = "API_CLIENT_ID";
-const QString CLIENT_SECRET = "API_KEY_PLACEHOLDER";
 
 int main(int argc, char *argv[])
 {
@@ -26,13 +23,16 @@ int main(int argc, char *argv[])
         }
     }
 
+    const QString clientID = qEnvironmentVariable("GSYNC_CLIENT_ID", "YOUR_CLIENT_ID");
+    const QString clientSecret = qEnvironmentVariable("GSYNC_CLIENT_SECRET", "YOUR_CLIENT_SECRET");
+
     // IMPORTANT: Check your configuration before running!
-    if (CLIENT_ID.contains("YOUR") || CLIENT_SECRET.contains("YOUR")) {
+    if (clientID.contains("YOUR") || clientID.contains("YOUR")) {
         qCritical() << "ERROR: Please replace CLIENT_ID and CLIENT_SECRET in main.cpp with your actual credentials.";
         return 1;
     }
 
-    GoogleAuthenticator auth(CLIENT_ID, CLIENT_SECRET);
+    GoogleAuthenticator auth(clientID, clientSecret);
     GoogleFileList files;
     GoogleDrive drive(files, auth);
     GoogleSync sync(drive);
