@@ -36,4 +36,4 @@ target_link_libraries(GSync PRIVATE Qt6::Widgets)
 target_link_libraries(GSync PRIVATE Qt6::Core)
 target_link_libraries(GSync PRIVATE Qt6::NetworkAuth)
 
-qt_add_translations(TARGETS GSync)
+add_subdirectory(i18n)
