@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.19)
 
 project(GSync VERSION 0.1 LANGUAGES CXX)
 
@@ -9,25 +9,16 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools NetworkAuth)
+find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets LinguistTools)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets LinguistTools NetworkAuth)
 
-set(TS_FILES GSync_en_001.ts)
+qt_standard_project_setup(I18N_TRANSLATED_LANGUAGES de fr zh-CN zh-TW da nl fi fr ge el hi ga-IE ja tlh-AA lv no en-PT pt-PT ro ru sk sl es-ES sv-SE tr uk)
 
 set(PROJECT_SOURCES
         main.cpp
         syncwindow.cpp
         syncwindow.h
         syncwindow.ui
-        ${TS_FILES}
-)
-
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    find_package(Qt6 REQUIRED COMPONENTS Core)
-
-    qt_add_executable(GSync
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
         googleauthenticator.h googleauthenticator.cpp
         googledrive.h googledrive.cpp
         googlefile.h googlefile.cpp
@@ -37,54 +28,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         googlefiledownload.h googlefiledownload.cpp
         googlefilesyncmodel.h googlefilesyncmodel.cpp
         progressdelegate.h progressdelegate.cpp
-    )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET GSync APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
+)
 
-    qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
-else()
-    if(ANDROID)
-        add_library(GSync SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(GSync
-            ${PROJECT_SOURCES}
-        )
-    endif()
+qt_add_executable(GSync ${PROJECT_SOURCES})
 
-    qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
-endif()
-
-target_link_libraries(GSync PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(GSync PRIVATE Qt6::Widgets)
 target_link_libraries(GSync PRIVATE Qt6::Core)
 target_link_libraries(GSync PRIVATE Qt6::NetworkAuth)
 
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
-if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.GSync)
-endif()
-set_target_properties(GSync PROPERTIES
-    ${BUNDLE_ID_OPTION}
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
-)
-
-include(GNUInstallDirs)
-install(TARGETS GSync
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
-
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(GSync)
-endif()
+qt_add_translations(TARGETS GSync)
