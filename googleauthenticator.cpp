@@ -77,6 +77,11 @@ QString GoogleAuthenticator::token() const
     return m_oauth.token();
 }
 
+bool GoogleAuthenticator::hasToken() const
+{
+    return QFileInfo::exists("tokens.json");
+}
+
 void GoogleAuthenticator::onGranted()
 {
     qDebug() << "--- OAuth Granted Successfully! ---";

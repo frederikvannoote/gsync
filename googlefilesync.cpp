@@ -36,7 +36,7 @@ QString GoogleFileSync::toString(State s)
     case SYNCING:
         return "Syncing";
     case SYNCED:
-        return "Synced";
+        return "In sync";
     case UNKNOWN:
     default:
         return "Unknown";
@@ -84,6 +84,8 @@ void GoogleFileSync::onDownloadComplete()
 
     QDir::root().mkpath(localFileDir);
     QFile::copy(m_pDownload->file.fileName(), localFilePath);
+    delete m_pDownload;
+    m_pDownload = nullptr;
 
     m_state = State::SYNCED;
     Q_EMIT stateChanged(m_state);

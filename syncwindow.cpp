@@ -64,4 +64,7 @@ void SyncWindow::indicateAuthenticationStart()
     ui->connectStatus->setVisible(false);
     ui->start->setEnabled(false);
     ui->stackedWidget->setCurrentWidget(ui->config);
+    ui->connect->setVisible(!m_authenticator.hasToken());
+    if (m_authenticator.hasToken())
+        m_authenticator.startAuthentication();
 }

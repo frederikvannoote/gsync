@@ -15,6 +15,8 @@ public:
 
     QString token() const;
 
+    bool hasToken() const;
+
 public Q_SLOTS:
     void startAuthentication();
 
