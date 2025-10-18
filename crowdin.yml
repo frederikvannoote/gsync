@@ -1,0 +1,3 @@
+files:
+  - source: GSync_*.ts
+    translation: i18n
