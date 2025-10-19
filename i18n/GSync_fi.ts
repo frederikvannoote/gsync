@@ -11,7 +11,7 @@
     <message>
       <location filename="../syncwindow.ui" line="43"/>
       <source>Connect to your Google Drive</source>
-      <translation>Yhdistä Google Driveen</translation>
+      <translation>Muodosta yhteys Google Driveen</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="66"/>
@@ -26,7 +26,7 @@
     <message>
       <location filename="../syncwindow.ui" line="131"/>
       <source>Synchronize to:</source>
-      <translation>Synkronoi kohteeseen:</translation>
+      <translation>Synkronoi:</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="144"/>
@@ -41,7 +41,7 @@
     <message>
       <location filename="../syncwindow.ui" line="213"/>
       <source>Discovering Google Drive</source>
-      <translation>Löydät Google Drivesta</translation>
+      <translation>Löydät Google Driven</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="271"/>
@@ -61,7 +61,7 @@
     <message>
       <location filename="../syncwindow.cpp" line="50"/>
       <source>Select target directory</source>
-      <translation>Select target directory</translation>
+      <translation>Valitse kohdehakemisto</translation>
     </message>
   </context>
 </TS>
