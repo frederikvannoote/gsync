@@ -1,4 +1,4 @@
 files:
-  - source: /i18n/GSync.ts
+  - source: /i18n/GSync_en.ts
     translation: /i18n/GSync_%two_letters_code%.%file_extension%
     type: qt
