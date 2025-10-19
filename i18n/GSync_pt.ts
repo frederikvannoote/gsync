@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt-PT" sourcelanguage="en">
+<TS version="2.1" language="pt-BR" sourcelanguage="en">
   <context>
     <name>SyncWindow</name>
     <message>
@@ -61,7 +61,7 @@
     <message>
       <location filename="../syncwindow.cpp" line="50"/>
       <source>Select target directory</source>
-      <translation>Selecionar diretoria de destino:</translation>
+      <translation>Selecione o diretório de destino</translation>
     </message>
   </context>
 </TS>
