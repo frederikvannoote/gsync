@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh-CN" sourcelanguage="en">
+<TS version="2.1" language="zh-TW" sourcelanguage="en">
   <context>
     <name>SyncWindow</name>
     <message>
       <location filename="../syncwindow.ui" line="14"/>
       <source>SyncWindow</source>
-      <translation>同步窗口</translation>
+      <translation type="unfinished">SyncWindow</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="43"/>
       <source>Connect to your Google Drive</source>
-      <translation>连接到您的Google Drive</translation>
+      <translation type="unfinished">Connect to your Google Drive</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="66"/>
       <source>Connect</source>
-      <translation>连接</translation>
+      <translation type="unfinished">Connect</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="89"/>
       <source>Connected</source>
-      <translation>已连接</translation>
+      <translation type="unfinished">Connected</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="131"/>
       <source>Synchronize to:</source>
-      <translation>同步到：</translation>
+      <translation type="unfinished">Synchronize to:</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="144"/>
       <source>...</source>
-      <translation>...</translation>
+      <translation type="unfinished">...</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="183"/>
       <source>Start</source>
-      <translation>开始</translation>
+      <translation type="unfinished">Start</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="213"/>
       <source>Discovering Google Drive</source>
-      <translation>发现 Google Drive</translation>
+      <translation type="unfinished">Discovering Google Drive</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="271"/>
       <source>Found 0 files</source>
-      <translation>找到 0 个文件</translation>
+      <translation type="unfinished">Found 0 files</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="297"/>
       <source>Cancel</source>
-      <translation>取消</translation>
+      <translation type="unfinished">Cancel</translation>
     </message>
     <message>
       <location filename="../syncwindow.cpp" line="40"/>
       <source>Found %1 files</source>
-      <translation>找到 %1 文件</translation>
+      <translation type="unfinished">Found %1 files</translation>
     </message>
     <message>
       <location filename="../syncwindow.cpp" line="50"/>
       <source>Select target directory</source>
-      <translation>Select target directory</translation>
+      <translation type="unfinished">Select target directory</translation>
     </message>
   </context>
 </TS>
