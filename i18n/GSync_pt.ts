@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt-BR" sourcelanguage="en">
+<TS version="2.1" language="pt-PT" sourcelanguage="en">
   <context>
     <name>SyncWindow</name>
     <message>
       <location filename="../syncwindow.ui" line="14"/>
       <source>Synchronize your Google Drive</source>
-      <translation type="unfinished">Synchronize your Google Drive</translation>
+      <translation>Sincronize o seu Google Drive</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="43"/>
@@ -61,7 +61,7 @@
     <message>
       <location filename="../syncwindow.cpp" line="50"/>
       <source>Select target directory</source>
-      <translation>Selecione o diretório de destino</translation>
+      <translation>Selecionar diretoria de destino:</translation>
     </message>
   </context>
 </TS>
