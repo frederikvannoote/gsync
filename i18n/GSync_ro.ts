@@ -56,12 +56,12 @@
     <message>
       <location filename="../syncwindow.cpp" line="40"/>
       <source>Found %1 files</source>
-      <translation>Am gasit fisiere %1</translation>
+      <translation>S-au găsit fişiere %1</translation>
     </message>
     <message>
       <location filename="../syncwindow.cpp" line="50"/>
       <source>Select target directory</source>
-      <translation>Select target directory</translation>
+      <translation>Selectează director țintă</translation>
     </message>
   </context>
 </TS>
