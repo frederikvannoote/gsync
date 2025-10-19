@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets LinguistTools NetworkAuth)
 
-qt_standard_project_setup(I18N_TRANSLATED_LANGUAGES de fr zh-CN zh-TW da nl fi fr ge el hi ga-IE ja tlh-AA lv no en-PT pt-PT ro ru sk sl es-ES sv-SE tr uk)
+qt_standard_project_setup(I18N_TRANSLATED_LANGUAGES en de fr zh-CN zh-TW da nl fi fr ge el hi ga-IE ja tlh-AA lv no en-PT pt-PT ro ru sk sl es-ES sv-SE tr uk)
 
 set(PROJECT_SOURCES
         main.cpp
