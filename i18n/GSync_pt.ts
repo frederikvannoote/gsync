@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt-BR" sourcelanguage="en">
+<TS version="2.1" language="pt-PT" sourcelanguage="en">
   <context>
     <name>SyncWindow</name>
     <message>
       <location filename="../syncwindow.ui" line="14"/>
       <source>SyncWindow</source>
-      <translation type="unfinished">SyncWindow</translation>
+      <translation>SyncWindow</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="43"/>
       <source>Connect to your Google Drive</source>
-      <translation type="unfinished">Connect to your Google Drive</translation>
+      <translation>Conectar ao seu Google Drive</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="66"/>
       <source>Connect</source>
-      <translation type="unfinished">Connect</translation>
+      <translation>Conectar</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="89"/>
       <source>Connected</source>
-      <translation type="unfinished">Connected</translation>
+      <translation>Conectado</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="131"/>
       <source>Synchronize to:</source>
-      <translation type="unfinished">Synchronize to:</translation>
+      <translation>Sincronizar para:</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="144"/>
       <source>...</source>
-      <translation type="unfinished">...</translation>
+      <translation>...</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="183"/>
       <source>Start</source>
-      <translation type="unfinished">Start</translation>
+      <translation>Iniciar</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="213"/>
       <source>Discovering Google Drive</source>
-      <translation type="unfinished">Discovering Google Drive</translation>
+      <translation>Descobrindo o Google Drive</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="271"/>
       <source>Found 0 files</source>
-      <translation type="unfinished">Found 0 files</translation>
+      <translation>0 arquivos encontrados</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="297"/>
       <source>Cancel</source>
-      <translation type="unfinished">Cancel</translation>
+      <translation>cancelar</translation>
     </message>
     <message>
       <location filename="../syncwindow.cpp" line="40"/>
       <source>Found %1 files</source>
-      <translation type="unfinished">Found %1 files</translation>
+      <translation>Encontrados %1 arquivos</translation>
     </message>
     <message>
       <location filename="../syncwindow.cpp" line="50"/>
       <source>Select target directory</source>
-      <translation type="unfinished">Select target directory</translation>
+      <translation>Select target directory</translation>
     </message>
   </context>
 </TS>
