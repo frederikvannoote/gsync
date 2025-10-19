@@ -6,7 +6,7 @@
     <message>
       <location filename="../syncwindow.ui" line="14"/>
       <source>SyncWindow</source>
-      <translation>Synkroniseringsvindue</translation>
+      <translation>SyncVindue</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="43"/>
@@ -26,7 +26,7 @@
     <message>
       <location filename="../syncwindow.ui" line="131"/>
       <source>Synchronize to:</source>
-      <translation>Synkronisér til:</translation>
+      <translation>Synkroniser til:</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="144"/>
@@ -61,7 +61,7 @@
     <message>
       <location filename="../syncwindow.cpp" line="50"/>
       <source>Select target directory</source>
-      <translation>Select target directory</translation>
+      <translation>Vælg målkataloget</translation>
     </message>
   </context>
 </TS>
