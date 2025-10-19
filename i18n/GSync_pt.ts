@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt-BR" sourcelanguage="en">
+<TS version="2.1" language="pt-PT" sourcelanguage="en">
   <context>
     <name>SyncWindow</name>
     <message>
       <location filename="../syncwindow.ui" line="14"/>
       <source>SyncWindow</source>
-      <translation>SyncWindow</translation>
+      <translation>SyncJanela</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="43"/>
@@ -46,12 +46,12 @@
     <message>
       <location filename="../syncwindow.ui" line="271"/>
       <source>Found 0 files</source>
-      <translation>0 arquivos encontrados</translation>
+      <translation>0 ficheiros encontrados</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="297"/>
       <source>Cancel</source>
-      <translation>cancelar</translation>
+      <translation>Cancelar</translation>
     </message>
     <message>
       <location filename="../syncwindow.cpp" line="40"/>
@@ -61,7 +61,7 @@
     <message>
       <location filename="../syncwindow.cpp" line="50"/>
       <source>Select target directory</source>
-      <translation>Select target directory</translation>
+      <translation>Selecionar diretoria de destino:</translation>
     </message>
   </context>
 </TS>
