@@ -51,7 +51,7 @@
     <message>
       <location filename="../syncwindow.ui" line="297"/>
       <source>Cancel</source>
-      <translation>annuleren</translation>
+      <translation>Annuleren</translation>
     </message>
     <message>
       <location filename="../syncwindow.cpp" line="40"/>
@@ -61,7 +61,7 @@
     <message>
       <location filename="../syncwindow.cpp" line="50"/>
       <source>Select target directory</source>
-      <translation>Select target directory</translation>
+      <translation>Selecteer doelmap:</translation>
     </message>
   </context>
 </TS>
