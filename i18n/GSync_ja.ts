@@ -61,7 +61,7 @@
     <message>
       <location filename="../syncwindow.cpp" line="50"/>
       <source>Select target directory</source>
-      <translation>Select target directory</translation>
+      <translation>ターゲットディレクトリを選択します。</translation>
     </message>
   </context>
 </TS>
