@@ -6,7 +6,7 @@
     <message>
       <location filename="../syncwindow.ui" line="14"/>
       <source>Synchronize your Google Drive</source>
-      <translation type="unfinished">Synchronize your Google Drive</translation>
+      <translation>مزامنة Google Drive</translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="43"/>
