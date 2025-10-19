@@ -1,23 +1,4 @@
 files:
-  - # 1. Define the single source file path
-    source: /i18n/GSync_en.ts 
-    
-    # 2. Define the translation file pattern
-    # This pattern tells Crowdin where to push the translated content.
-    # The structure must match the other filenames: GSync_<locale>.ts
-    translation: /i18n/GSync_%locale%.ts
-    
-    # 3. Specify the file type
+  - source: /i18n/GSync_en.ts
+    translation: /i18n/GSync_%two_letters_code%.%file_extension%
     type: qt
-    
-    # 4. (Optional) Ignore the source file in the translations, 
-    #    to prevent Crowdin from trying to translate English back to English.
-    #    While generally implied by the source tag, it's safer to ensure.
-    ignore_plurals_rules: true
-    languages_mapping:
-      # This mapping ensures codes like 'zh-CN' map correctly to your file names.
-      default:
-        # This tells Crowdin that for the English language, the target file is the source file itself.
-        # Use 'en' or 'en_US' depending on your project's default language.
-        locale: 
-          'en': 'en'
