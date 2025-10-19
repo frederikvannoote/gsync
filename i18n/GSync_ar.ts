@@ -46,7 +46,7 @@
     <message>
       <location filename="../syncwindow.ui" line="271"/>
       <source>Found 0 files</source>
-      <translation>تم العثور على 0 ملف</translation>
+      <translation>تم العثور على ملفات </translation>
     </message>
     <message>
       <location filename="../syncwindow.ui" line="297"/>
@@ -56,12 +56,12 @@
     <message>
       <location filename="../syncwindow.cpp" line="40"/>
       <source>Found %1 files</source>
-      <translation>تم العثور على ملفات %1</translation>
+      <translation>تم العثور على ملفات 1%</translation>
     </message>
     <message>
       <location filename="../syncwindow.cpp" line="50"/>
       <source>Select target directory</source>
-      <translation>Select target directory</translation>
+      <translation>اختيار الدليل الهدف</translation>
     </message>
   </context>
 </TS>
