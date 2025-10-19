@@ -5,7 +5,7 @@
     <name>SyncWindow</name>
     <message>
         <location filename="../syncwindow.ui" line="14"/>
-        <source>SyncWindow</source>
+        <source>Synchronize your Google Drive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

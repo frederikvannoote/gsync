@@ -4,9 +4,13 @@
 <context>
     <name>SyncWindow</name>
     <message>
-        <location filename="../syncwindow.ui" line="14"/>
         <source>SyncWindow</source>
-        <translation>SyncVindue</translation>
+        <translation type="vanished">SyncVindue</translation>
+    </message>
+    <message>
+        <location filename="../syncwindow.ui" line="14"/>
+        <source>Synchronize your Google Drive</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../syncwindow.ui" line="43"/>
