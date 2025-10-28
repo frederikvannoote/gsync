@@ -56,12 +56,12 @@
     <message>
       <location filename="../syncwindow.cpp" line="43"/>
       <source>Running syncs: %1</source>
-      <translation type="unfinished">Running syncs: %1</translation>
+      <translation>Sincronización en ejecución: %1</translation>
     </message>
     <message>
       <location filename="../syncwindow.cpp" line="46"/>
       <source>%1 files to analyze</source>
-      <translation type="unfinished">%1 files to analyze</translation>
+      <translation>Archivos %1 para analizar</translation>
     </message>
     <message>
       <location filename="../syncwindow.cpp" line="52"/>
