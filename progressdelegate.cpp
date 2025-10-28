@@ -18,7 +18,7 @@ void ProgressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     int progress = index.data(GoogleFileSyncModel::ProgressRole).toInt();
 
     // 3. If progress is not 100 (still downloading), draw the progress bar
-    if (progress > 0 && progress <= 100) {
+    if (progress >= 0 && progress <= 100) {
 
         // Create a style option specific to a progress bar
         QStyleOptionProgressBar progressBarOption;
@@ -31,12 +31,6 @@ void ProgressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
 
         // Use the application's style to draw the control
         QApplication::style()->drawControl(QStyle::CE_ProgressBar, &progressBarOption, painter);
-
-    } else if (progress == 100) {
-
-        // If completed, just draw the "Done (Verified)" text using the base delegate's painter
-        // The model returns the finished status text via Qt::DisplayRole (see model implementation)
-        QStyledItemDelegate::paint(painter, option, index);
 
     } else {
         // For 0 (Pending) or errors, just use the standard delegate painting

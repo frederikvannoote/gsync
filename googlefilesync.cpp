@@ -15,7 +15,7 @@ GoogleFileSync::GoogleFileSync(GoogleDrive &drive,
     , m_localFileDir(QDir(m_baseDir).filePath(m_file.path()))
     , m_localFilePath(m_localFileDir.filePath(m_file.name()))
     , m_state(UNKNOWN)
-    , m_progress(0)
+    , m_progress(-1)
     , m_pDownload(nullptr)
     , m_downloaded(0)
 {}
@@ -95,6 +95,10 @@ void GoogleFileSync::synchronize()
 
         m_state = State::SYNCING;
         Q_EMIT stateChanged(m_state);
+
+        m_progress = 0;
+        Q_EMIT progressChanged(m_progress);
+
         Q_EMIT started();
     }
 }
