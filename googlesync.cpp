@@ -86,6 +86,9 @@ void GoogleSync::startNextSync()
     while (m_runningSyncs < m_maxRunningSyncs && !m_syncQueue.isEmpty())
     {
         GoogleFileSync *fs = m_syncQueue.dequeue();
+        while (fs->state() == GoogleFileSync::State::SYNCED)
+            fs = m_syncQueue.dequeue();
+
         connect(fs, &GoogleFileSync::completed, this, &GoogleSync::onComplete);
 
         fs->synchronize();
