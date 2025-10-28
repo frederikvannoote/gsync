@@ -14,7 +14,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core Widgets LinguistTools NetworkAuth)
 
 qt_standard_project_setup(I18N_TRANSLATED_LANGUAGES en de fr zh da nl fi fr el ja lv no pt ro ru es sv uk)
 
-set(PROJECT_SOURCES
+qt_add_executable(GSync
         main.cpp
         syncwindow.cpp
         syncwindow.h
@@ -28,9 +28,8 @@ set(PROJECT_SOURCES
         googlefiledownload.h googlefiledownload.cpp
         googlefilesyncmodel.h googlefilesyncmodel.cpp
         progressdelegate.h progressdelegate.cpp
-)
-
-qt_add_executable(GSync ${PROJECT_SOURCES})
+        fileanalyzerunnable.h fileanalyzerunnable.cpp
+        googlesyncdata.h googlesyncdata.cpp)
 
 target_link_libraries(GSync PRIVATE Qt6::Widgets)
 target_link_libraries(GSync PRIVATE Qt6::Core)

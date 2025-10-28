@@ -1,7 +1,6 @@
 #include "googlefilesync.h"
 #include "googlefiledownload.h"
 #include <QFile>
-#include <QDir>
 #include <QDebug>
 
 
@@ -13,6 +12,8 @@ GoogleFileSync::GoogleFileSync(GoogleDrive &drive,
     , m_drive(drive)
     , m_file(file)
     , m_baseDir(baseDir)
+    , m_localFileDir(QDir(m_baseDir).filePath(m_file.path()))
+    , m_localFilePath(m_localFileDir.filePath(m_file.name()))
     , m_state(UNKNOWN)
     , m_progress(0)
     , m_pDownload(nullptr)
@@ -29,10 +30,22 @@ const GoogleFile &GoogleFileSync::file() const
     return m_file;
 }
 
+QDir GoogleFileSync::localFileDir() const
+{
+    return m_localFileDir;
+}
+
+QString GoogleFileSync::localFilePath() const
+{
+    return m_localFilePath;
+}
+
 QString GoogleFileSync::toString(State s)
 {
     switch (s)
     {
+    case OUTOFSYNC:
+        return "Out of sync";
     case SYNCING:
         return "Syncing";
     case SYNCED:
@@ -43,17 +56,36 @@ QString GoogleFileSync::toString(State s)
     }
 }
 
-void GoogleFileSync::start()
+void GoogleFileSync::analyze()
 {
-    const QString localFileDir = QDir(m_baseDir).filePath(m_file.path());
-    const QString localFilePath = QDir(localFileDir).filePath(m_file.name());
+    const QString localFilePath = this->localFilePath();
 
-    qInfo() << m_file.id() << m_file.name();
-    qInfo() << "Syncing" << localFilePath;
     if (m_file.md5Sum() != calculateMd5Sum(localFilePath))
     {
         // Files are different
+        qInfo() << localFilePath << "is out of sync to the file on Google Drive. It does need to be synced.";
 
+        m_state = State::OUTOFSYNC;
+        Q_EMIT stateChanged(m_state);
+    }
+    else
+    {
+        // Files are identical
+        qInfo() << localFilePath << "is identical to the file on Google Drive. It does not need to be synced.";
+
+        m_state = State::SYNCED;
+        Q_EMIT stateChanged(m_state);
+        Q_EMIT completed();
+    }
+}
+
+void GoogleFileSync::synchronize()
+{
+    if (m_state == State::UNKNOWN)
+        analyze();
+
+    if (m_state == State::OUTOFSYNC)
+    {
         m_downloaded = 0;
         m_pDownload = m_drive.download(m_file);
         connect(m_pDownload, &GoogleFileDownload::completed, this, &GoogleFileSync::onDownloadComplete);
@@ -64,22 +96,12 @@ void GoogleFileSync::start()
         Q_EMIT stateChanged(m_state);
         Q_EMIT started();
     }
-    else
-    {
-        // Files are identical
-
-        qInfo() << localFilePath << "is identical to the file on Google Drive. It does not need to be synced.";
-
-        m_state = State::SYNCED;
-        Q_EMIT stateChanged(m_state);
-        Q_EMIT completed();
-    }
 }
 
 void GoogleFileSync::onDownloadComplete()
 {
-    const QString localFileDir = QDir(m_baseDir).filePath(m_file.path());
-    const QString localFilePath = QDir(localFileDir).filePath(m_file.name());
+    const QString localFileDir = this->localFileDir().path();
+    const QString localFilePath = this->localFilePath();
     qInfo() << "Move file to" << localFilePath;
 
     QDir::root().mkpath(localFileDir);

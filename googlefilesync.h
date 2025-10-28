@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <QDir>
 #include "googledrive.h"
 #include "googlefile.h"
 class GoogleFileDownload;
@@ -18,6 +19,7 @@ public:
     enum State
     {
         UNKNOWN,
+        OUTOFSYNC,
         SYNCING,
         SYNCED
     };
@@ -27,10 +29,16 @@ public:
 
     const GoogleFile& file() const;
 
+    //! @brief Directory where the local file resides.
+    QDir localFileDir() const;
+    //! @brief Path of the local file.
+    QString localFilePath() const;
+
     static QString toString(State s);
 
 public Q_SLOTS:
-    void start();
+    void analyze();
+    void synchronize();
 
 Q_SIGNALS:
     void started();
@@ -48,6 +56,8 @@ private:
     GoogleDrive &m_drive;
     GoogleFile m_file;
     const QString m_baseDir;
+    const QDir m_localFileDir;
+    const QString m_localFilePath;
 
     State m_state;
     int m_progress;

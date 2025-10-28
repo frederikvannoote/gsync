@@ -1,3 +1,18 @@
 files:
   - source: /i18n/GSync_en.ts
     translation: /i18n/GSync_%two_letters_code%.ts
+
+# --- Post-Processing Hook ---
+# This section runs a command after the translated file is exported from Crowdin.
+post_export:
+  # The command pipes the output of xmllint (which uses 2 spaces for indentation) 
+  # into perl, which replaces the 2-space indentation with 4 spaces globally.
+  # We use 'xmllint' for formatting and 'perl' for the specific 4-space indent fix.
+  command: "xmllint --format %file% | perl -pe 's/^(  +)/\"    \" x (length($1) / 2)/e' > %file%.tmp && mv %file%.tmp %file%"
+  
+  # Specify required tools if applicable
+  # required_tools:
+  #   - xmllint
+
+# You must ensure the environment where the post_export command runs (your CI/CD or 
+# local machine) has 'xmllint' and 'perl' installed and accessible in the PATH.

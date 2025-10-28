@@ -36,6 +36,18 @@ SyncWindow::SyncWindow(GoogleAuthenticator &authenticator,
 
         ui->stackedWidget->setCurrentWidget(ui->sync);
     });
+    connect(&sync, &GoogleSync::numberOfFilesChanged, this, [this](int files) {
+        ui->syncedFiles->setMaximum(files);
+    });
+    connect(&sync, &GoogleSync::runningSyncsChanged, this, [this](int runningSyncs) {
+        ui->runningSyncs->setText(tr("Running syncs: %1").arg(runningSyncs));
+    });
+    connect(&sync, &GoogleSync::unknownItemsChanged, this, [this](int unknown) {
+        ui->toAnalyze->setText(tr("%1 files to analyze").arg(unknown));
+    });
+    connect(&sync, &GoogleSync::syncedItemsChanged, this, [this](int synced) {
+        ui->syncedFiles->setValue(synced);
+    });
     connect(&files, &GoogleFileList::countChanged, ui->numberOfFiles, [this](int count) {
         ui->numberOfFiles->setText(tr("Found %1 files").arg(count));
     });

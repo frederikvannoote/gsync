@@ -54,12 +54,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="40"/>
+        <location filename="../syncwindow.cpp" line="43"/>
+        <source>Running syncs: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../syncwindow.cpp" line="46"/>
+        <source>%1 files to analyze</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../syncwindow.cpp" line="52"/>
         <source>Found %1 files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="50"/>
+        <location filename="../syncwindow.cpp" line="62"/>
         <source>Select target directory</source>
         <translation type="unfinished"></translation>
     </message>
