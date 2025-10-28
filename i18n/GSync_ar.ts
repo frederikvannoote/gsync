@@ -56,12 +56,12 @@
     <message>
       <location filename="../syncwindow.cpp" line="43"/>
       <source>Running syncs: %1</source>
-      <translation type="unfinished">Running syncs: %1</translation>
+      <translation>تشغيل المزامنة: %1</translation>
     </message>
     <message>
       <location filename="../syncwindow.cpp" line="46"/>
       <source>%1 files to analyze</source>
-      <translation type="unfinished">%1 files to analyze</translation>
+      <translation>%1 ملفات لتحليلها</translation>
     </message>
     <message>
       <location filename="../syncwindow.cpp" line="52"/>
