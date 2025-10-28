@@ -1,77 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="fi" sourcelanguage="en">
-  <context>
+<context>
     <name>SyncWindow</name>
     <message>
-      <location filename="../syncwindow.ui" line="14"/>
-      <source>Synchronize your Google Drive</source>
-      <translation>Synkronisoi Google Drive</translation>
+        <location filename="../syncwindow.ui" line="14"/>
+        <source>Synchronize your Google Drive</source>
+        <translation>Synkronisoi Google Drive</translation>
     </message>
     <message>
-      <location filename="../syncwindow.ui" line="43"/>
-      <source>Connect to your Google Drive</source>
-      <translation>Muodosta yhteys Google Driveen</translation>
+        <location filename="../syncwindow.ui" line="43"/>
+        <source>Connect to your Google Drive</source>
+        <translation>Muodosta yhteys Google Driveen</translation>
     </message>
     <message>
-      <location filename="../syncwindow.ui" line="66"/>
-      <source>Connect</source>
-      <translation>Yhdistä</translation>
+        <location filename="../syncwindow.ui" line="66"/>
+        <source>Connect</source>
+        <translation>Yhdistä</translation>
     </message>
     <message>
-      <location filename="../syncwindow.ui" line="89"/>
-      <source>Connected</source>
-      <translation>Yhdistetty</translation>
+        <location filename="../syncwindow.ui" line="89"/>
+        <source>Connected</source>
+        <translation>Yhdistetty</translation>
     </message>
     <message>
-      <location filename="../syncwindow.ui" line="131"/>
-      <source>Synchronize to:</source>
-      <translation>Synkronoi:</translation>
+        <location filename="../syncwindow.ui" line="131"/>
+        <source>Synchronize to:</source>
+        <translation>Synkronoi:</translation>
     </message>
     <message>
-      <location filename="../syncwindow.ui" line="144"/>
-      <source>...</source>
-      <translation>...</translation>
+        <location filename="../syncwindow.ui" line="144"/>
+        <source>...</source>
+        <translation>...</translation>
     </message>
     <message>
-      <location filename="../syncwindow.ui" line="183"/>
-      <source>Start</source>
-      <translation>Aloita</translation>
+        <location filename="../syncwindow.ui" line="183"/>
+        <source>Start</source>
+        <translation>Aloita</translation>
     </message>
     <message>
-      <location filename="../syncwindow.ui" line="213"/>
-      <source>Discovering Google Drive</source>
-      <translation>Löydät Google Driven</translation>
+        <location filename="../syncwindow.ui" line="213"/>
+        <source>Discovering Google Drive</source>
+        <translation>Löydät Google Driven</translation>
     </message>
     <message>
-      <location filename="../syncwindow.ui" line="271"/>
-      <source>Found 0 files</source>
-      <translation>Löytyi 0 tiedostoa</translation>
+        <location filename="../syncwindow.ui" line="271"/>
+        <source>Found 0 files</source>
+        <translation>Löytyi 0 tiedostoa</translation>
     </message>
     <message>
-      <location filename="../syncwindow.ui" line="297"/>
-      <source>Cancel</source>
-      <translation>Peruuta</translation>
+        <location filename="../syncwindow.ui" line="297"/>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
     </message>
     <message>
-      <location filename="../syncwindow.cpp" line="43"/>
-      <source>Running syncs: %1</source>
-      <translation>Käynnissä olevat synkronoinnit: %1</translation>
+        <location filename="../syncwindow.cpp" line="43"/>
+        <source>Running syncs: %1</source>
+        <translation>Käynnissä olevat synkronoinnit: %1</translation>
     </message>
     <message>
-      <location filename="../syncwindow.cpp" line="46"/>
-      <source>%1 files to analyze</source>
-      <translation>Analysoitavat %1 tiedostot</translation>
+        <location filename="../syncwindow.cpp" line="46"/>
+        <source>%1 files to analyze</source>
+        <translation>Analysoitavat %1 tiedostot</translation>
     </message>
     <message>
-      <location filename="../syncwindow.cpp" line="52"/>
-      <source>Found %1 files</source>
-      <translation>Löytyi %1 tiedostot</translation>
+        <location filename="../syncwindow.cpp" line="52"/>
+        <source>Found %1 files</source>
+        <translation>Löytyi %1 tiedostot</translation>
     </message>
     <message>
-      <location filename="../syncwindow.cpp" line="62"/>
-      <source>Select target directory</source>
-      <translation>Valitse kohdehakemisto</translation>
+        <location filename="../syncwindow.cpp" line="62"/>
+        <source>Select target directory</source>
+        <translation>Valitse kohdehakemisto</translation>
     </message>
-  </context>
+</context>
 </TS>
