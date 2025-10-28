@@ -18,7 +18,7 @@ void ProgressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     int progress = index.data(GoogleFileSyncModel::ProgressRole).toInt();
 
     // 3. If progress is not 100 (still downloading), draw the progress bar
-    if (progress > 0 && progress < 100) {
+    if (progress > 0 && progress <= 100) {
 
         // Create a style option specific to a progress bar
         QStyleOptionProgressBar progressBarOption;

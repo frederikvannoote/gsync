@@ -73,6 +73,7 @@ void GoogleFileSync::analyze()
         // Files are identical
         qInfo() << localFilePath << "is identical to the file on Google Drive. It does not need to be synced.";
 
+        m_progress = 100;
         m_state = State::SYNCED;
         Q_EMIT stateChanged(m_state);
         Q_EMIT completed();
