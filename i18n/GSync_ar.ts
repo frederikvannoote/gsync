@@ -54,12 +54,22 @@
       <translation>إلغاء</translation>
     </message>
     <message>
-      <location filename="../syncwindow.cpp" line="40"/>
+      <location filename="../syncwindow.cpp" line="43"/>
+      <source>Running syncs: %1</source>
+      <translation type="unfinished">Running syncs: %1</translation>
+    </message>
+    <message>
+      <location filename="../syncwindow.cpp" line="46"/>
+      <source>%1 files to analyze</source>
+      <translation type="unfinished">%1 files to analyze</translation>
+    </message>
+    <message>
+      <location filename="../syncwindow.cpp" line="52"/>
       <source>Found %1 files</source>
       <translation>تم العثور على ملفات 1%</translation>
     </message>
     <message>
-      <location filename="../syncwindow.cpp" line="50"/>
+      <location filename="../syncwindow.cpp" line="62"/>
       <source>Select target directory</source>
       <translation>اختيار الدليل الهدف</translation>
     </message>
