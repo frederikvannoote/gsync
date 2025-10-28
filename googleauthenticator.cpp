@@ -29,6 +29,8 @@ GoogleAuthenticator::GoogleAuthenticator(const QString &client_id,
     m_oauth(),
     m_refreshTimer()
 {
+    connect(&m_refreshTimer, &QTimer::timeout, &m_oauth, &QOAuth2AuthorizationCodeFlow::refreshAccessToken);
+
     // 2. Set Google's OAuth endpoints
     m_oauth.setAuthorizationUrl(QUrl("https://accounts.google.com/o/oauth2/auth"));
     m_oauth.setAccessTokenUrl(QUrl("https://oauth2.googleapis.com/token"));
