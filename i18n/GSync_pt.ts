@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt-BR" sourcelanguage="en">
+<TS version="2.1" language="pt-PT" sourcelanguage="en">
   <context>
     <name>SyncWindow</name>
     <message>
@@ -56,12 +56,12 @@
     <message>
       <location filename="../syncwindow.cpp" line="43"/>
       <source>Running syncs: %1</source>
-      <translation type="unfinished">Running syncs: %1</translation>
+      <translation>Sincronizações em execução: %1</translation>
     </message>
     <message>
       <location filename="../syncwindow.cpp" line="46"/>
       <source>%1 files to analyze</source>
-      <translation type="unfinished">%1 files to analyze</translation>
+      <translation>Arquivos %1 para analisar</translation>
     </message>
     <message>
       <location filename="../syncwindow.cpp" line="52"/>
@@ -71,7 +71,7 @@
     <message>
       <location filename="../syncwindow.cpp" line="62"/>
       <source>Select target directory</source>
-      <translation>Selecione o diretório de destino</translation>
+      <translation>Selecionar diretoria de destino:</translation>
     </message>
   </context>
 </TS>
