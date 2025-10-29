@@ -48,6 +48,8 @@ private slots:
     void onFileDownloadFinished();
 
 private:
+    void performDownload(GoogleFileDownload *localFile);
+
     GoogleFileList &m_files;
     GoogleAuthenticator &m_authenticator;
     bool m_fileDiscoveryBusy;

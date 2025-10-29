@@ -54,7 +54,7 @@ GoogleFileDownload* GoogleDrive::download(GoogleFile &file)
     }
 
     // Open the local file for writing (and fail if we can't)
-    GoogleFileDownload *localFile = new GoogleFileDownload();
+    GoogleFileDownload *localFile = new GoogleFileDownload(file.id());
     if (!localFile->file.open())
     {
         qCritical() << "Failed to open file for writing:" << localFile->file.fileName();
@@ -63,24 +63,7 @@ GoogleFileDownload* GoogleDrive::download(GoogleFile &file)
     }
 
     qDebug() << "Attempting to download file:" << file.name() << "to:" << localFile->file.fileName();
-
-    // Prepare the authenticated download request
-    // The '?alt=media' parameter is crucial for downloading the file content.
-    QUrl downloadUrl(QString("https://www.googleapis.com/drive/v3/files/%1?alt=media").arg(file.id()));
-    QNetworkRequest request(downloadUrl);
-    request.setRawHeader("Authorization", QString("Bearer %1").arg(m_authenticator.token()).toUtf8());
-
-    QNetworkReply *reply = m_netManager.get(request);
-
-    // Set properties and connect streaming signals
-    reply->setProperty("RequestType", "FileDownload");
-    reply->setProperty("LocalFilePath", localFile->file.fileName());
-
-    // Store the file handle in the reply to manage its lifecycle
-    reply->setProperty("LocalFileHandle", QVariant::fromValue(localFile));
-
-    connect(reply, &QNetworkReply::readyRead, this, &GoogleDrive::onFileDownloadReadyRead);
-    connect(reply, &QNetworkReply::finished, this, &GoogleDrive::onFileDownloadFinished);
+    performDownload(localFile);
 
     return localFile;
 }
@@ -91,15 +74,13 @@ void GoogleDrive::retrieveFiles(const QString &pageToken)
 
     // The Drive API endpoint for listing files
     QUrl driveUrl("https://www.googleapis.com/drive/v3/files");
+
     QUrlQuery query;
-    // Limit results to 10 for a simple test
     query.addQueryItem("pageSize", "1000");
     if (!pageToken.isEmpty())
         query.addQueryItem("pageToken", pageToken);
     query.addQueryItem("fields", "nextPageToken, files(id, name, mimeType, size, md5Checksum, parents)");
     query.addQueryItem("corpora", "user");
-    // query.addQueryItem("includeItemsFromAllDrives", "true");
-    // query.addQueryItem("supportsAllDrives", "true");
     query.addQueryItem("q", "trashed=false");
     driveUrl.setQuery(query);
 
@@ -237,14 +218,39 @@ void GoogleDrive::onFileDownloadFinished()
     QString localPath = reply->property("LocalFilePath").toString();
 
     if (reply->error() != QNetworkReply::NoError) {
-        qCritical() << "\n--- File Download Failed ---";
-        qCritical() << "Error:" << reply->errorString();
-        qCritical() << "--------------------------\n";
-
-        if (localFile)
+        const QString errorString = reply->errorString();
+        if (errorString.contains("GOAWAY") && localFile->retry() < 10)
         {
-            localFile->file.close();
-            Q_EMIT localFile->failed();
+            localFile->increaseRetry();
+
+            // Cleanup current download and start over
+            qWarning() << "Download of" << localFile->file.fileName() << "failed. Performing a retry. (attempt" << localFile->retry() << ")";
+
+            // Truncate the file. This sets the file size to 0, discarding all content.
+            // It also automatically moves the write pointer to the beginning (position 0).
+            if (!localFile->file.resize(0)) {
+                qCritical() << "Failed to resize temporary file to 0.";
+            }
+
+            // Explicitly seek to the beginning (optional after resize(0), but good practice).
+            localFile->file.seek(0);
+
+            // Restart the download (with standoff)
+            QTimer::singleShot((2^localFile->retry()) * 60, [this, localFile](){
+                performDownload(localFile);
+            });
+        }
+        else
+        {
+            qCritical() << "\n--- File Download Failed ---";
+            qCritical() << "Error:" << errorString;
+            qCritical() << "--------------------------\n";
+
+            if (localFile)
+            {
+                localFile->file.close();
+                Q_EMIT localFile->failed();
+            }
         }
     } else {
         qInfo() << "\n--- File Download Complete! ---";
@@ -259,4 +265,25 @@ void GoogleDrive::onFileDownloadFinished()
     }
 
     reply->deleteLater();
+}
+
+void GoogleDrive::performDownload(GoogleFileDownload *localFile)
+{
+    // Prepare the authenticated download request
+    // The '?alt=media' parameter is crucial for downloading the file content.
+    QUrl downloadUrl(QString("https://www.googleapis.com/drive/v3/files/%1?alt=media").arg(localFile->id()));
+    QNetworkRequest request(downloadUrl);
+    request.setRawHeader("Authorization", QString("Bearer %1").arg(m_authenticator.token()).toUtf8());
+
+    QNetworkReply *reply = m_netManager.get(request);
+
+    // Set properties and connect streaming signals
+    reply->setProperty("RequestType", "FileDownload");
+    reply->setProperty("LocalFilePath", localFile->file.fileName());
+
+    // Store the file handle in the reply to manage its lifecycle
+    reply->setProperty("LocalFileHandle", QVariant::fromValue(localFile));
+
+    connect(reply, &QNetworkReply::readyRead, this, &GoogleDrive::onFileDownloadReadyRead);
+    connect(reply, &QNetworkReply::finished, this, &GoogleDrive::onFileDownloadFinished);
 }
