@@ -1,4 +1,4 @@
-#include "syncwindow.h"
+#include "mainwindow.h"
 
 #include <QApplication>
 #include <QLocale>
@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
         sync.start();
     });
 
-    SyncWindow w(auth, files, drive, sync);
+    MainWindow w(auth, files, drive, sync);
     w.indicateAuthenticationStart();
     w.show();
 

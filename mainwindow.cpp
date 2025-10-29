@@ -1,5 +1,5 @@
-#include "syncwindow.h"
-#include "./ui_syncwindow.h"
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
 #include "googleauthenticator.h"
 #include "googlefilelist.h"
 #include "googledrive.h"
@@ -9,13 +9,13 @@
 #include <QFileDialog>
 
 
-SyncWindow::SyncWindow(GoogleAuthenticator &authenticator,
+MainWindow::MainWindow(GoogleAuthenticator &authenticator,
                        GoogleFileList &files,
                        GoogleDrive &drive,
                        GoogleSync &sync,
                        QWidget *parent)
-    : QWidget(parent)
-    , ui(new Ui::SyncWindow)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
     , m_authenticator(authenticator)
     , m_files(files)
     , m_drive(drive)
@@ -66,12 +66,12 @@ SyncWindow::SyncWindow(GoogleAuthenticator &authenticator,
     });
 }
 
-SyncWindow::~SyncWindow()
+MainWindow::~MainWindow()
 {
     delete ui;
 }
 
-void SyncWindow::indicateAuthenticationStart()
+void MainWindow::indicateAuthenticationStart()
 {
     ui->connectStatus->setVisible(false);
     ui->start->setEnabled(false);

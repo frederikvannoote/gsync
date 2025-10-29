@@ -16,9 +16,6 @@ qt_standard_project_setup(I18N_TRANSLATED_LANGUAGES en de fr zh da nl fi fr el j
 
 qt_add_executable(GSync
         main.cpp
-        syncwindow.cpp
-        syncwindow.h
-        syncwindow.ui
         googleauthenticator.h googleauthenticator.cpp
         googledrive.h googledrive.cpp
         googlefile.h googlefile.cpp
@@ -29,7 +26,8 @@ qt_add_executable(GSync
         googlefilesyncmodel.h googlefilesyncmodel.cpp
         progressdelegate.h progressdelegate.cpp
         fileanalyzerunnable.h fileanalyzerunnable.cpp
-        googlesyncdata.h googlesyncdata.cpp)
+        googlesyncdata.h googlesyncdata.cpp
+        mainwindow.h mainwindow.cpp mainwindow.ui)
 
 target_link_libraries(GSync PRIVATE Qt6::Widgets)
 target_link_libraries(GSync PRIVATE Qt6::Core)
