@@ -123,6 +123,8 @@ void GoogleSync::onStateChanged()
         }
     }
 
+    numberOfSyncedItems = m_numberOfItems - (m_syncQueue.count() - numberOfSyncedItems);
+
     if (numberOfUnknownItems != m_numberOfUnknownItems)
     {
         m_numberOfUnknownItems = numberOfUnknownItems;
