@@ -18,7 +18,8 @@ public:
     enum CustomRoles {
         FileIdRole = Qt::UserRole + 1,
         RawSizeRole, // Raw qint64 size for logic/sorting
-        ProgressRole // Raw integer percentage (0-100) for the progress bar delegate
+        RawProgressRole, // Raw integer percentage (0-100) for the progress bar delegate
+        RawStatusRole
     };
 
     // Define the columns available in the table view using an enum for clarity

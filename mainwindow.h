@@ -1,22 +1,44 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QMainWindow>
+#include <QLabel>
+#include <QProgressBar>
 
 namespace Ui {
 class MainWindow;
 }
+class GoogleAuthenticator;
+class GoogleFileList;
+class GoogleDrive;
+class GoogleSync;
+
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(GoogleAuthenticator &authenticator,
+                        GoogleFileList &files,
+                        GoogleDrive &drive,
+                        GoogleSync &sync,
+                        QWidget *parent = nullptr);
     ~MainWindow();
 
-private:
-    Ui::MainWindow *ui;
-};
+public Q_SLOTS:
+    void indicateAuthenticationStart();
 
-#endif // MAINWINDOW_H
+private:
+    void createStatusBar();
+    void createToolBar();
+
+    Ui::MainWindow *ui;
+    GoogleAuthenticator &m_authenticator;
+    GoogleFileList &m_files;
+    GoogleDrive &m_drive;
+    GoogleSync &m_sync;
+
+    QLabel *m_pRunningSyncs;
+    QLabel *m_pToAnalyze;
+    QProgressBar *m_pSyncedFiles;
+};

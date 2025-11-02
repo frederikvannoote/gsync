@@ -2,76 +2,166 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="fr" sourcelanguage="en">
 <context>
+    <name>MainWindow</name>
+    <message>
+        <location filename="../mainwindow.ui" line="14"/>
+        <source>Synchronize your Google Drive</source>
+        <translation type="unfinished">Synchroniser votre Google Drive</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="44"/>
+        <source>Connect to your Google Drive</source>
+        <translation type="unfinished">Connectez-vous à votre Google Drive</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="67"/>
+        <source>Connect</source>
+        <translation type="unfinished">Connecter</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="90"/>
+        <source>Connected</source>
+        <translation type="unfinished">Connecté</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="132"/>
+        <source>Synchronize to:</source>
+        <translation type="unfinished">Synchroniser vers:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="145"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="184"/>
+        <source>Start</source>
+        <translation type="unfinished">Début</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="214"/>
+        <source>Discovering Google Drive</source>
+        <translation type="unfinished">Découvrir Google Drive</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="272"/>
+        <source>Found 0 files</source>
+        <translation type="unfinished">0 fichier trouvé</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="298"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Abandonner</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="355"/>
+        <location filename="../mainwindow.cpp" line="131"/>
+        <source>Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="378"/>
+        <source>Show files with unknown status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="392"/>
+        <source>Show out of sync files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="406"/>
+        <source>Show files being synced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="420"/>
+        <source>Show in sync files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="425"/>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="70"/>
+        <source>Running syncs: %1</source>
+        <translation type="unfinished">Synchronisation en cours : %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="73"/>
+        <source>%1 files to analyze</source>
+        <translation type="unfinished">Fichiers %1 à analyser</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="79"/>
+        <source>Found %1 files</source>
+        <translation type="unfinished">Fichiers %1 trouvés</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="89"/>
+        <source>Select target directory</source>
+        <translation type="unfinished">Sélectionnez le répertoire cible</translation>
+    </message>
+</context>
+<context>
     <name>SyncWindow</name>
     <message>
-        <location filename="../syncwindow.ui" line="14"/>
         <source>Synchronize your Google Drive</source>
-        <translation>Synchroniser votre Google Drive</translation>
+        <translation type="vanished">Synchroniser votre Google Drive</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="43"/>
         <source>Connect to your Google Drive</source>
-        <translation>Connectez-vous à votre Google Drive</translation>
+        <translation type="vanished">Connectez-vous à votre Google Drive</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="66"/>
         <source>Connect</source>
-        <translation>Connecter</translation>
+        <translation type="vanished">Connecter</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="89"/>
         <source>Connected</source>
-        <translation>Connecté</translation>
+        <translation type="vanished">Connecté</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="131"/>
         <source>Synchronize to:</source>
-        <translation>Synchroniser vers:</translation>
+        <translation type="vanished">Synchroniser vers:</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="144"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="183"/>
         <source>Start</source>
-        <translation>Début</translation>
+        <translation type="vanished">Début</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="213"/>
         <source>Discovering Google Drive</source>
-        <translation>Découvrir Google Drive</translation>
+        <translation type="vanished">Découvrir Google Drive</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="271"/>
         <source>Found 0 files</source>
-        <translation>0 fichier trouvé</translation>
+        <translation type="vanished">0 fichier trouvé</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="297"/>
         <source>Cancel</source>
-        <translation>Abandonner</translation>
+        <translation type="vanished">Abandonner</translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="43"/>
         <source>Running syncs: %1</source>
-        <translation>Synchronisation en cours : %1</translation>
+        <translation type="vanished">Synchronisation en cours : %1</translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="46"/>
         <source>%1 files to analyze</source>
-        <translation>Fichiers %1 à analyser</translation>
+        <translation type="vanished">Fichiers %1 à analyser</translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="52"/>
         <source>Found %1 files</source>
-        <translation>Fichiers %1 trouvés</translation>
+        <translation type="vanished">Fichiers %1 trouvés</translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="62"/>
         <source>Select target directory</source>
-        <translation>Sélectionnez le répertoire cible</translation>
+        <translation type="vanished">Sélectionnez le répertoire cible</translation>
     </message>
 </context>
 </TS>

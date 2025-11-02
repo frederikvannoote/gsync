@@ -5,8 +5,10 @@
 #include "googledrive.h"
 #include "googlesync.h"
 #include "googlefilesyncmodel.h"
+#include "statusfilterproxymodel.h"
 #include "progressdelegate.h"
 #include <QFileDialog>
+#include <QToolBar>
 
 
 MainWindow::MainWindow(GoogleAuthenticator &authenticator,
@@ -20,33 +22,58 @@ MainWindow::MainWindow(GoogleAuthenticator &authenticator,
     , m_files(files)
     , m_drive(drive)
     , m_sync(sync)
+    , m_pRunningSyncs(nullptr)
+    , m_pToAnalyze(nullptr)
+    , m_pSyncedFiles(nullptr)
 {
     ui->setupUi(this);
+    createToolBar();
+    createStatusBar();
+    menuBar()->hide();
 
     connect(&drive, &GoogleDrive::fileDiscoveryStarted, this, [this]() {
         ui->stackedWidget->setCurrentWidget(ui->discovery);
     });
     connect(&sync, &GoogleSync::started, this, [this]() {
+        menuBar()->show();
+
         GoogleFileSyncModel *model = new GoogleFileSyncModel(this);
+        StatusFilterProxyModel *proxyModel = new StatusFilterProxyModel(this);
+        proxyModel->setDynamicSortFilter(true);
+        proxyModel->setSourceModel(model);
+
+        connect(ui->actionShowFilesWithUnknownStatus, &QAction::triggered, this, [proxyModel](bool checked) {
+            proxyModel->setFilter(StatusFilterProxyModel::FilterUnknown, checked);
+        });
+        connect(ui->actionShowInSyncFiles, &QAction::triggered, this, [proxyModel](bool checked) {
+            proxyModel->setFilter(StatusFilterProxyModel::FilterSynced, checked);
+        });
+        connect(ui->actionShowOutOfSyncFiles, &QAction::triggered, this, [proxyModel](bool checked) {
+            proxyModel->setFilter(StatusFilterProxyModel::FilterNeedsSyncing, checked);
+        });
+        connect(ui->actionShowSyncingFiles, &QAction::triggered, this, [proxyModel](bool checked) {
+            proxyModel->setFilter(StatusFilterProxyModel::FilterSyncing, checked);
+        });
+
         QVector<GoogleFileSync*> fs = m_sync.files();
         model->setFiles(fs);
-        ui->tableView->setModel(model);
+        ui->tableView->setModel(proxyModel);
         ui->tableView->setItemDelegateForColumn(GoogleFileSyncModel::Progress, new ProgressDelegate(ui->tableView));
         ui->tableView->setSortingEnabled(true);
 
         ui->stackedWidget->setCurrentWidget(ui->sync);
     });
     connect(&sync, &GoogleSync::numberOfFilesChanged, this, [this](int files) {
-        ui->syncedFiles->setMaximum(files);
+        m_pSyncedFiles->setMaximum(files);
     });
     connect(&sync, &GoogleSync::runningSyncsChanged, this, [this](int runningSyncs) {
-        ui->runningSyncs->setText(tr("Running syncs: %1").arg(runningSyncs));
+        m_pRunningSyncs->setText(tr("Running syncs: %1").arg(runningSyncs));
     });
     connect(&sync, &GoogleSync::unknownItemsChanged, this, [this](int unknown) {
-        ui->toAnalyze->setText(tr("%1 files to analyze").arg(unknown));
+        m_pToAnalyze->setText(tr("%1 files to analyze").arg(unknown));
     });
     connect(&sync, &GoogleSync::syncedItemsChanged, this, [this](int synced) {
-        ui->syncedFiles->setValue(synced);
+        m_pSyncedFiles->setValue(synced);
     });
     connect(&files, &GoogleFileList::countChanged, ui->numberOfFiles, [this](int count) {
         ui->numberOfFiles->setText(tr("Found %1 files").arg(count));
@@ -79,4 +106,36 @@ void MainWindow::indicateAuthenticationStart()
     ui->connect->setVisible(!m_authenticator.hasToken());
     if (m_authenticator.hasToken())
         m_authenticator.startAuthentication();
+}
+
+void MainWindow::createStatusBar()
+{
+    QStatusBar *statusBar = this->statusBar();
+    statusBar->hide(); // Hidden at start
+    connect(&m_sync, &GoogleSync::started, this, [statusBar]() {
+        statusBar->show();
+    });
+
+    m_pRunningSyncs = new QLabel(this);
+    statusBar->addPermanentWidget(m_pRunningSyncs);
+
+    m_pToAnalyze = new QLabel(this);
+    statusBar->addPermanentWidget(m_pToAnalyze);
+
+    m_pSyncedFiles = new QProgressBar(this);
+    statusBar->addPermanentWidget(m_pSyncedFiles, 1);
+}
+
+void MainWindow::createToolBar()
+{
+    QToolBar *toolBar = addToolBar(tr("Filters"));
+    toolBar->hide(); // Hidden at start
+    connect(&m_sync, &GoogleSync::started, this, [toolBar]() {
+        toolBar->show();
+    });
+
+    toolBar->addAction(ui->actionShowFilesWithUnknownStatus);
+    toolBar->addAction(ui->actionShowOutOfSyncFiles);
+    toolBar->addAction(ui->actionShowSyncingFiles);
+    toolBar->addAction(ui->actionShowInSyncFiles);
 }

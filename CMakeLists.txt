@@ -27,7 +27,8 @@ qt_add_executable(GSync
         progressdelegate.h progressdelegate.cpp
         fileanalyzerunnable.h fileanalyzerunnable.cpp
         googlesyncdata.h googlesyncdata.cpp
-        mainwindow.h mainwindow.cpp mainwindow.ui)
+        mainwindow.h mainwindow.cpp mainwindow.ui
+        statusfilterproxymodel.h statusfilterproxymodel.cpp)
 
 target_link_libraries(GSync PRIVATE Qt6::Widgets)
 target_link_libraries(GSync PRIVATE Qt6::Core)

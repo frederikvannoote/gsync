@@ -2,76 +2,166 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ro" sourcelanguage="en">
 <context>
+    <name>MainWindow</name>
+    <message>
+        <location filename="../mainwindow.ui" line="14"/>
+        <source>Synchronize your Google Drive</source>
+        <translation type="unfinished">Sincronizează-ți Google Drive</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="44"/>
+        <source>Connect to your Google Drive</source>
+        <translation type="unfinished">Conectați-vă la Google Drive</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="67"/>
+        <source>Connect</source>
+        <translation type="unfinished">Conectează-te</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="90"/>
+        <source>Connected</source>
+        <translation type="unfinished">Conectat</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="132"/>
+        <source>Synchronize to:</source>
+        <translation type="unfinished">Sincronizează cu:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="145"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="184"/>
+        <source>Start</source>
+        <translation type="unfinished">Pornire</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="214"/>
+        <source>Discovering Google Drive</source>
+        <translation type="unfinished">Descoperă Google Drive</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="272"/>
+        <source>Found 0 files</source>
+        <translation type="unfinished">S-au găsit 0 fișiere</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="298"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Anulează</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="355"/>
+        <location filename="../mainwindow.cpp" line="131"/>
+        <source>Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="378"/>
+        <source>Show files with unknown status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="392"/>
+        <source>Show out of sync files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="406"/>
+        <source>Show files being synced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="420"/>
+        <source>Show in sync files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="425"/>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="70"/>
+        <source>Running syncs: %1</source>
+        <translation type="unfinished">Rulează sincronizările: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="73"/>
+        <source>%1 files to analyze</source>
+        <translation type="unfinished">%1 fișiere pentru a analiza</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="79"/>
+        <source>Found %1 files</source>
+        <translation type="unfinished">S-au găsit fişiere %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="89"/>
+        <source>Select target directory</source>
+        <translation type="unfinished">Selectează director țintă</translation>
+    </message>
+</context>
+<context>
     <name>SyncWindow</name>
     <message>
-        <location filename="../syncwindow.ui" line="14"/>
         <source>Synchronize your Google Drive</source>
-        <translation>Sincronizează-ți Google Drive</translation>
+        <translation type="vanished">Sincronizează-ți Google Drive</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="43"/>
         <source>Connect to your Google Drive</source>
-        <translation>Conectați-vă la Google Drive</translation>
+        <translation type="vanished">Conectați-vă la Google Drive</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="66"/>
         <source>Connect</source>
-        <translation>Conectează-te</translation>
+        <translation type="vanished">Conectează-te</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="89"/>
         <source>Connected</source>
-        <translation>Conectat</translation>
+        <translation type="vanished">Conectat</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="131"/>
         <source>Synchronize to:</source>
-        <translation>Sincronizează cu:</translation>
+        <translation type="vanished">Sincronizează cu:</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="144"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="183"/>
         <source>Start</source>
-        <translation>Pornire</translation>
+        <translation type="vanished">Pornire</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="213"/>
         <source>Discovering Google Drive</source>
-        <translation>Descoperă Google Drive</translation>
+        <translation type="vanished">Descoperă Google Drive</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="271"/>
         <source>Found 0 files</source>
-        <translation>S-au găsit 0 fișiere</translation>
+        <translation type="vanished">S-au găsit 0 fișiere</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="297"/>
         <source>Cancel</source>
-        <translation>Anulează</translation>
+        <translation type="vanished">Anulează</translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="43"/>
         <source>Running syncs: %1</source>
-        <translation>Rulează sincronizările: %1</translation>
+        <translation type="vanished">Rulează sincronizările: %1</translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="46"/>
         <source>%1 files to analyze</source>
-        <translation>%1 fișiere pentru a analiza</translation>
+        <translation type="vanished">%1 fișiere pentru a analiza</translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="52"/>
         <source>Found %1 files</source>
-        <translation>S-au găsit fişiere %1</translation>
+        <translation type="vanished">S-au găsit fişiere %1</translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="62"/>
         <source>Select target directory</source>
-        <translation>Selectează director țintă</translation>
+        <translation type="vanished">Selectează director țintă</translation>
     </message>
 </context>
 </TS>

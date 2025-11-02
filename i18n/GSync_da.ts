@@ -2,76 +2,166 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="da" sourcelanguage="en">
 <context>
+    <name>MainWindow</name>
+    <message>
+        <location filename="../mainwindow.ui" line="14"/>
+        <source>Synchronize your Google Drive</source>
+        <translation type="unfinished">Synkroniser dit Google Drev</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="44"/>
+        <source>Connect to your Google Drive</source>
+        <translation type="unfinished">Opret forbindelse til dit Google Drev</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="67"/>
+        <source>Connect</source>
+        <translation type="unfinished">Forbind</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="90"/>
+        <source>Connected</source>
+        <translation type="unfinished">Forbundet</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="132"/>
+        <source>Synchronize to:</source>
+        <translation type="unfinished">Synkroniser til:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="145"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="184"/>
+        <source>Start</source>
+        <translation type="unfinished">Start</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="214"/>
+        <source>Discovering Google Drive</source>
+        <translation type="unfinished">Opdag Google Drev</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="272"/>
+        <source>Found 0 files</source>
+        <translation type="unfinished">Fundet 0 filer</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="298"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuller</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="355"/>
+        <location filename="../mainwindow.cpp" line="131"/>
+        <source>Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="378"/>
+        <source>Show files with unknown status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="392"/>
+        <source>Show out of sync files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="406"/>
+        <source>Show files being synced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="420"/>
+        <source>Show in sync files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="425"/>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="70"/>
+        <source>Running syncs: %1</source>
+        <translation type="unfinished">Kører synkroniseringer: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="73"/>
+        <source>%1 files to analyze</source>
+        <translation type="unfinished">%1 filer der skal analyseres</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="79"/>
+        <source>Found %1 files</source>
+        <translation type="unfinished">Fandt %1 filer</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="89"/>
+        <source>Select target directory</source>
+        <translation type="unfinished">Vælg målkataloget</translation>
+    </message>
+</context>
+<context>
     <name>SyncWindow</name>
     <message>
-        <location filename="../syncwindow.ui" line="14"/>
         <source>Synchronize your Google Drive</source>
-        <translation>Synkroniser dit Google Drev</translation>
+        <translation type="vanished">Synkroniser dit Google Drev</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="43"/>
         <source>Connect to your Google Drive</source>
-        <translation>Opret forbindelse til dit Google Drev</translation>
+        <translation type="vanished">Opret forbindelse til dit Google Drev</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="66"/>
         <source>Connect</source>
-        <translation>Forbind</translation>
+        <translation type="vanished">Forbind</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="89"/>
         <source>Connected</source>
-        <translation>Forbundet</translation>
+        <translation type="vanished">Forbundet</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="131"/>
         <source>Synchronize to:</source>
-        <translation>Synkroniser til:</translation>
+        <translation type="vanished">Synkroniser til:</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="144"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="183"/>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation type="vanished">Start</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="213"/>
         <source>Discovering Google Drive</source>
-        <translation>Opdag Google Drev</translation>
+        <translation type="vanished">Opdag Google Drev</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="271"/>
         <source>Found 0 files</source>
-        <translation>Fundet 0 filer</translation>
+        <translation type="vanished">Fundet 0 filer</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="297"/>
         <source>Cancel</source>
-        <translation>Annuller</translation>
+        <translation type="vanished">Annuller</translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="43"/>
         <source>Running syncs: %1</source>
-        <translation>Kører synkroniseringer: %1</translation>
+        <translation type="vanished">Kører synkroniseringer: %1</translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="46"/>
         <source>%1 files to analyze</source>
-        <translation>%1 filer der skal analyseres</translation>
+        <translation type="vanished">%1 filer der skal analyseres</translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="52"/>
         <source>Found %1 files</source>
-        <translation>Fandt %1 filer</translation>
+        <translation type="vanished">Fandt %1 filer</translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="62"/>
         <source>Select target directory</source>
-        <translation>Vælg målkataloget</translation>
+        <translation type="vanished">Vælg målkataloget</translation>
     </message>
 </context>
 </TS>

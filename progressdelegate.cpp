@@ -15,7 +15,7 @@ void ProgressDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opti
     }
 
     // 2. Read the raw progress percentage from the model using the custom role
-    int progress = index.data(GoogleFileSyncModel::ProgressRole).toInt();
+    int progress = index.data(GoogleFileSyncModel::RawProgressRole).toInt();
 
     // 3. If progress is not 100 (still downloading), draw the progress bar
     if (progress >= 0 && progress <= 100) {

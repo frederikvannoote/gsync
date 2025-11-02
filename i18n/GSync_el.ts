@@ -2,76 +2,166 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="el" sourcelanguage="en">
 <context>
+    <name>MainWindow</name>
+    <message>
+        <location filename="../mainwindow.ui" line="14"/>
+        <source>Synchronize your Google Drive</source>
+        <translation type="unfinished">Συγχρονίστε το Google Drive σας</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="44"/>
+        <source>Connect to your Google Drive</source>
+        <translation type="unfinished">Συνδεθείτε στο Google Drive σας</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="67"/>
+        <source>Connect</source>
+        <translation type="unfinished">Σύνδεση</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="90"/>
+        <source>Connected</source>
+        <translation type="unfinished">Συνδεδεμένο</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="132"/>
+        <source>Synchronize to:</source>
+        <translation type="unfinished">Συγχρονισμός σε:</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="145"/>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="184"/>
+        <source>Start</source>
+        <translation type="unfinished">Έναρξη</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="214"/>
+        <source>Discovering Google Drive</source>
+        <translation type="unfinished">Ανακαλύπτοντας Το Google Drive</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="272"/>
+        <source>Found 0 files</source>
+        <translation type="unfinished">Βρέθηκαν 0 αρχεία</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="298"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="355"/>
+        <location filename="../mainwindow.cpp" line="131"/>
+        <source>Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="378"/>
+        <source>Show files with unknown status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="392"/>
+        <source>Show out of sync files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="406"/>
+        <source>Show files being synced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="420"/>
+        <source>Show in sync files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="425"/>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="70"/>
+        <source>Running syncs: %1</source>
+        <translation type="unfinished">Εκτελείται συγχρονισμός: %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="73"/>
+        <source>%1 files to analyze</source>
+        <translation type="unfinished">Αρχεία %1 για ανάλυση</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="79"/>
+        <source>Found %1 files</source>
+        <translation type="unfinished">Βρέθηκαν αρχεία %1</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="89"/>
+        <source>Select target directory</source>
+        <translation type="unfinished">Επιλέξτε κατάλογο προορισμού:</translation>
+    </message>
+</context>
+<context>
     <name>SyncWindow</name>
     <message>
-        <location filename="../syncwindow.ui" line="14"/>
         <source>Synchronize your Google Drive</source>
-        <translation>Συγχρονίστε το Google Drive σας</translation>
+        <translation type="vanished">Συγχρονίστε το Google Drive σας</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="43"/>
         <source>Connect to your Google Drive</source>
-        <translation>Συνδεθείτε στο Google Drive σας</translation>
+        <translation type="vanished">Συνδεθείτε στο Google Drive σας</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="66"/>
         <source>Connect</source>
-        <translation>Σύνδεση</translation>
+        <translation type="vanished">Σύνδεση</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="89"/>
         <source>Connected</source>
-        <translation>Συνδεδεμένο</translation>
+        <translation type="vanished">Συνδεδεμένο</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="131"/>
         <source>Synchronize to:</source>
-        <translation>Συγχρονισμός σε:</translation>
+        <translation type="vanished">Συγχρονισμός σε:</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="144"/>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="vanished">...</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="183"/>
         <source>Start</source>
-        <translation>Έναρξη</translation>
+        <translation type="vanished">Έναρξη</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="213"/>
         <source>Discovering Google Drive</source>
-        <translation>Ανακαλύπτοντας Το Google Drive</translation>
+        <translation type="vanished">Ανακαλύπτοντας Το Google Drive</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="271"/>
         <source>Found 0 files</source>
-        <translation>Βρέθηκαν 0 αρχεία</translation>
+        <translation type="vanished">Βρέθηκαν 0 αρχεία</translation>
     </message>
     <message>
-        <location filename="../syncwindow.ui" line="297"/>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="vanished">Ακύρωση</translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="43"/>
         <source>Running syncs: %1</source>
-        <translation>Εκτελείται συγχρονισμός: %1</translation>
+        <translation type="vanished">Εκτελείται συγχρονισμός: %1</translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="46"/>
         <source>%1 files to analyze</source>
-        <translation>Αρχεία %1 για ανάλυση</translation>
+        <translation type="vanished">Αρχεία %1 για ανάλυση</translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="52"/>
         <source>Found %1 files</source>
-        <translation>Βρέθηκαν αρχεία %1</translation>
+        <translation type="vanished">Βρέθηκαν αρχεία %1</translation>
     </message>
     <message>
-        <location filename="../syncwindow.cpp" line="62"/>
         <source>Select target directory</source>
-        <translation>Επιλέξτε κατάλογο προορισμού:</translation>
+        <translation type="vanished">Επιλέξτε κατάλογο προορισμού:</translation>
     </message>
 </context>
 </TS>

@@ -68,16 +68,18 @@ void GoogleSync::start()
 {
     m_numberOfItems = m_syncQueue.count();
     Q_EMIT numberOfFilesChanged(m_numberOfItems);
+    Q_EMIT started();
 
     // Start analyzers (protected by mutex)
-    QThreadPool *pool = QThreadPool::globalInstance();
     {
         QMutexLocker<QMutex> locker(&m_analysisData->mutex);
-        for (int i = 0; i < pool->maxThreadCount(); ++i)
-            m_analysisData->waitCondition.wakeOne();
+        QThreadPool *pool = QThreadPool::globalInstance();
+        {
+            for (int i = 0; i < pool->maxThreadCount(); ++i)
+                m_analysisData->waitCondition.wakeOne();
+        }
     }
 
-    Q_EMIT started();
     startNextSync();
 }
 

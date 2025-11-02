@@ -1,5 +1,6 @@
 #include "googlefilesyncmodel.h"
 #include "googlefilesync.h"
+#include <QColor>
 
 
 GoogleFileSyncModel::GoogleFileSyncModel(QObject *parent)
@@ -45,25 +46,58 @@ QVariant GoogleFileSyncModel::data(const QModelIndex &index, int role) const
     if (index.row() >= m_files.size() || index.row() < 0)
         return QVariant();
 
-    const GoogleFileSync *f = m_files.at(index.row());
-    if (role == Qt::DisplayRole) {
-        switch (index.column()) {
+    const GoogleFileSync *fs = m_files.at(index.row());
+    switch (role)
+    {
+    case Qt::DisplayRole:
+    case Qt::EditRole: // Allow proxy model to read this role for sorting/filtering
+        switch (index.column())
+        {
         case Columns::Name:
-            return f->file().name();
+            return fs->file().name();
         case Columns::Path:
-            return f->file().path();
+            return fs->file().path();
+        case Columns::Status:
+            return GoogleFileSync::toString(fs->state());
         case Columns::Progress:
-            if (f->state() == GoogleFileSync::SYNCING)
-                return QString("%1%").arg(f->progress());
+            if (fs->state() == GoogleFileSync::SYNCING)
+                return QString("%1%").arg(fs->progress());
             else
                 return QString();
-        case Columns::Status:
-            return GoogleFileSync::toString(f->state());
         }
-    }
-
-    if (role == CustomRoles::ProgressRole) { // Raw percentage for delegate painting
-        return f->progress();
+        break;
+    case Qt::TextAlignmentRole:
+        switch (index.column())
+        {
+        case Columns::Progress:
+            return QVariant(Qt::AlignRight | Qt::AlignVCenter);
+        default:
+            return QVariant(Qt::AlignLeft | Qt::AlignVCenter);
+        }
+        break;
+    case Qt::ForegroundRole:
+        if (index.column() == Columns::Status)
+        {
+            switch (fs->state())
+            {
+            case GoogleFileSync::SYNCING:
+                return QColor(Qt::blue);
+            case GoogleFileSync::SYNCED:
+                return QColor(Qt::darkGreen);
+            case GoogleFileSync::UNKNOWN:
+            default:
+                return QColor(Qt::gray);
+            }
+        }
+        break;
+    case CustomRoles::RawProgressRole: // Custom role for numeric sorting
+        if (index.column() == Columns::Progress)
+            return fs->progress();
+        break;
+    case CustomRoles::RawStatusRole: // Custom role to expose the raw enum state for StatusFilterProxyModel
+        if (index.column() == Columns::Status)
+            return fs->state(); // Returns the int value of the GoogleFileSync::State enum
+        break;
     }
 
     return QVariant();
@@ -98,7 +132,7 @@ QVariant GoogleFileSyncModel::headerData(int section, Qt::Orientation orientatio
 void GoogleFileSyncModel::sort(int column, Qt::SortOrder order)
 {
     // 1. Prepare the model for a data change notification
-    beginResetModel();
+    Q_EMIT layoutAboutToBeChanged();
 
     // 2. Use std::sort with a custom comparison lambda
     std::sort(m_files.begin(), m_files.end(),
@@ -156,7 +190,7 @@ void GoogleFileSyncModel::sort(int column, Qt::SortOrder order)
               });
 
     // 3. Notify the views that the data has been sorted
-    endResetModel();
+    Q_EMIT layoutChanged();
 }
 
 void GoogleFileSyncModel::onFileSyncStatusUpdate()
@@ -190,7 +224,7 @@ void GoogleFileSyncModel::onFileProgressChanged(int value)
             QModelIndex topLeft = index(row, Columns::Progress);
             QModelIndex bottomRight = index(row, Columns::Progress);
 
-            emit dataChanged(topLeft, bottomRight, {Qt::DisplayRole, CustomRoles::ProgressRole});
+            emit dataChanged(topLeft, bottomRight, {Qt::DisplayRole, CustomRoles::RawProgressRole});
 
             return;
         }
