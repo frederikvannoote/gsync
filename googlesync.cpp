@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <QThreadPool>
 
+
 GoogleSync::GoogleSync(GoogleDrive &drive, int maxRunningSyncs, QObject *parent)
     : QObject{parent}
     , m_drive(drive)
@@ -27,9 +28,16 @@ GoogleSync::GoogleSync(GoogleDrive &drive, int maxRunningSyncs, QObject *parent)
 
 GoogleSync::~GoogleSync()
 {
-    QMutexLocker<QMutex> locker(&m_analysisData->mutex);
-    m_analysisData->m_keepRunning = false;
+    m_syncQueue.clear();
+
+    {
+        QMutexLocker<QMutex> locker(&m_analysisData->mutex);
+        m_analysisData->m_keepRunning = false;
+    }
+
     m_analysisData->waitCondition.wakeAll();
+
+    QThreadPool::globalInstance()->waitForDone();
 }
 
 void GoogleSync::setBaseDir(const QString &baseDirectory)
@@ -146,5 +154,7 @@ void GoogleSync::onComplete()
 {
     m_runningSyncs--;
     Q_EMIT runningSyncsChanged(m_runningSyncs);
-    QTimer::singleShot(1, this, &GoogleSync::startNextSync);
+
+    if (!m_syncQueue.isEmpty())
+        QTimer::singleShot(1, this, &GoogleSync::startNextSync);
 }
