@@ -2,6 +2,8 @@
 #include "googlefiledownload.h"
 #include <QFile>
 #include <QDebug>
+#include <QtConcurrent/QtConcurrent>
+#include <QFuture>
 
 
 GoogleFileSync::GoogleFileSync(GoogleDrive &drive,
@@ -83,9 +85,15 @@ void GoogleFileSync::analyze()
 void GoogleFileSync::synchronize()
 {
     if (m_state == State::UNKNOWN)
-        analyze();
-
-    if (m_state == State::OUTOFSYNC)
+    {
+        auto future = QtConcurrent::run([this]() {
+            this->analyze();
+        });
+        future.then([this]() {
+            this->synchronize();
+        });
+    }
+    else if (m_state == State::OUTOFSYNC)
     {
         m_downloaded = 0;
         m_pDownload = m_drive.download(m_file);
