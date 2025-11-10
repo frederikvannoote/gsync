@@ -50,6 +50,9 @@ MainWindow::MainWindow(GoogleAuthenticator &authenticator,
     connect(ui->actionShowSyncingFiles, &QAction::triggered, this, [proxyModel](bool checked) {
         proxyModel->setFilter(StatusFilterProxyModel::FilterSyncing, checked);
     });
+    connect(ui->actionQuit, &QAction::triggered, this, [](bool checked) {
+        qApp->quit();
+    });
 
     QVector<GoogleFileSync*> fs = m_sync.files();
     model->setFiles(fs);
