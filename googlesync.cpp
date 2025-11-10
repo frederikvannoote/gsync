@@ -96,15 +96,18 @@ void GoogleSync::startNextSync()
     while (m_runningSyncs < m_maxRunningSyncs && !m_syncQueue.isEmpty())
     {
         GoogleFileSync *fs = m_syncQueue.dequeue();
-        while (fs->state() == GoogleFileSync::State::SYNCED)
+        while (!m_syncQueue.isEmpty() && fs->state() == GoogleFileSync::State::SYNCED)
             fs = m_syncQueue.dequeue();
 
-        connect(fs, &GoogleFileSync::completed, this, &GoogleSync::onComplete);
+        if (fs->state() != GoogleFileSync::State::SYNCED)
+        {
+            connect(fs, &GoogleFileSync::completed, this, &GoogleSync::onComplete);
 
-        fs->synchronize();
+            fs->synchronize();
 
-        m_runningSyncs++;
-        Q_EMIT runningSyncsChanged(m_runningSyncs);
+            m_runningSyncs++;
+            Q_EMIT runningSyncsChanged(m_runningSyncs);
+        }
     }
 
     if (m_syncQueue.isEmpty())
@@ -116,6 +119,7 @@ void GoogleSync::onStateChanged()
     int numberOfUnknownItems = 0;
     int numberOfOutOfSyncItems = 0;
     int numberOfSyncedItems = 0;
+    int numberOfAnalyzing = 0;
 
     for (GoogleFileSync *fs : m_syncQueue) {
         switch (fs->state())
@@ -123,12 +127,16 @@ void GoogleSync::onStateChanged()
         case GoogleFileSync::State::UNKNOWN:
             numberOfUnknownItems++;
             break;
+        case GoogleFileSync::State::ANALYZING:
+            numberOfAnalyzing++;
+            break;
         case GoogleFileSync::State::SYNCED:
             numberOfSyncedItems++;
             break;
         case GoogleFileSync::State::OUTOFSYNC:
-        default:
             numberOfOutOfSyncItems++;
+            break;
+        default:
             break;
         }
     }

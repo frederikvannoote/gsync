@@ -59,21 +59,6 @@ GoogleAuthenticator::GoogleAuthenticator(const QString &client_id,
     qDebug() << "Authenticator initialized. Starting authorization flow...";
 }
 
-void GoogleAuthenticator::startAuthentication()
-{
-    Q_EMIT started();
-
-    // Check if we already have a token saved (e.g., from a previous session)
-    if (loadToken()) {
-        qDebug() << "Successfully loaded existing token. Ready to use API.";
-        return;
-    }
-
-    // If no token exists, start the authorization process
-    qDebug() << "Requesting new grant...";
-    m_oauth.grant();
-}
-
 QString GoogleAuthenticator::token() const
 {
     return m_oauth.token();
@@ -82,6 +67,13 @@ QString GoogleAuthenticator::token() const
 bool GoogleAuthenticator::hasToken() const
 {
     return QFileInfo::exists("tokens.json");
+}
+
+void GoogleAuthenticator::grant()
+{
+    // If no token exists, start the authorization process
+    qDebug() << "Requesting new grant...";
+    m_oauth.grant();
 }
 
 void GoogleAuthenticator::onGranted()

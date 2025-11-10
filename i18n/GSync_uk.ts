@@ -2,6 +2,34 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="uk" sourcelanguage="en">
 <context>
+    <name>GoogleFileSync</name>
+    <message>
+        <location filename="../googlefilesync.cpp" line="56"/>
+        <source>Analyzing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../googlefilesync.cpp" line="58"/>
+        <source>Out of sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../googlefilesync.cpp" line="60"/>
+        <source>Syncing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../googlefilesync.cpp" line="62"/>
+        <source>In sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../googlefilesync.cpp" line="65"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="14"/>
@@ -9,100 +37,128 @@
         <translation type="unfinished">Синхронізуйте свій Google Drive</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="44"/>
         <source>Connect to your Google Drive</source>
-        <translation type="unfinished">Підключіться до вашого диску Google</translation>
+        <translation type="obsolete">Підключіться до вашого диску Google</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="67"/>
         <source>Connect</source>
-        <translation type="unfinished">Підключитися</translation>
+        <translation type="obsolete">Підключитися</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="90"/>
         <source>Connected</source>
-        <translation type="unfinished">Підключено</translation>
+        <translation type="obsolete">Підключено</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="132"/>
         <source>Synchronize to:</source>
-        <translation type="unfinished">Синхронізувати:</translation>
+        <translation type="obsolete">Синхронізувати:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="145"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation type="obsolete">...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="184"/>
         <source>Start</source>
-        <translation type="unfinished">Старт</translation>
+        <translation type="obsolete">Старт</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="214"/>
         <source>Discovering Google Drive</source>
-        <translation type="unfinished">Відкриття Google Drive</translation>
+        <translation type="obsolete">Відкриття Google Drive</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="272"/>
         <source>Found 0 files</source>
-        <translation type="unfinished">Знайдено 0 файлів</translation>
+        <translation type="obsolete">Знайдено 0 файлів</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="298"/>
         <source>Cancel</source>
-        <translation type="unfinished">Скасувати</translation>
+        <translation type="obsolete">Скасувати</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="355"/>
-        <location filename="../mainwindow.cpp" line="131"/>
+        <location filename="../mainwindow.ui" line="34"/>
+        <location filename="../mainwindow.cpp" line="95"/>
         <source>Filters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="378"/>
+        <location filename="../mainwindow.ui" line="58"/>
         <source>Show files with unknown status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="392"/>
+        <location filename="../mainwindow.ui" line="72"/>
         <source>Show out of sync files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="406"/>
+        <location filename="../mainwindow.ui" line="86"/>
         <source>Show files being synced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="420"/>
+        <location filename="../mainwindow.ui" line="100"/>
         <source>Show in sync files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="425"/>
+        <location filename="../mainwindow.ui" line="105"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="70"/>
+        <location filename="../mainwindow.ui" line="125"/>
+        <source>Show files being analyzed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="64"/>
         <source>Running syncs: %1</source>
         <translation type="unfinished">Виконується синхронізація: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="73"/>
+        <location filename="../mainwindow.cpp" line="67"/>
         <source>%1 files to analyze</source>
         <translation type="unfinished">%1 файли для аналізу</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="79"/>
         <source>Found %1 files</source>
-        <translation type="unfinished">Знайдено %1 файли</translation>
+        <translation type="obsolete">Знайдено %1 файли</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="89"/>
         <source>Select target directory</source>
-        <translation type="unfinished">Select target directory</translation>
+        <translation type="obsolete">Select target directory</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../main.cpp" line="52"/>
+        <source>Welcome to GSync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="53"/>
+        <source>To configure GSync, you need to start by authenticating to your Google Drive. Select the account which you would like to sync.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="62"/>
+        <source>Choose directory where to sync to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="70"/>
+        <location filename="../main.cpp" line="74"/>
+        <source>Found %1 files.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="72"/>
+        <source>Discovering files in Google Drive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="71"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Скасувати</translation>
     </message>
 </context>
 <context>

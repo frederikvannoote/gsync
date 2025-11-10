@@ -22,6 +22,12 @@ GoogleFileSync::GoogleFileSync(GoogleDrive &drive,
     , m_downloaded(0)
 {}
 
+void GoogleFileSync::setState(State s)
+{
+    m_state = s;
+    Q_EMIT stateChanged(m_state);
+}
+
 int GoogleFileSync::progress() const
 {
     return m_progress;
@@ -46,15 +52,17 @@ QString GoogleFileSync::toString(State s)
 {
     switch (s)
     {
+    case ANALYZING:
+        return tr("Analyzing");
     case OUTOFSYNC:
-        return "Out of sync";
+        return tr("Out of sync");
     case SYNCING:
-        return "Syncing";
+        return tr("Syncing");
     case SYNCED:
-        return "In sync";
+        return tr("In sync");
     case UNKNOWN:
     default:
-        return "Unknown";
+        return tr("Unknown");
     }
 }
 
@@ -62,13 +70,14 @@ void GoogleFileSync::analyze()
 {
     const QString localFilePath = this->localFilePath();
 
+    setState(State::ANALYZING);
+
     if (m_file.md5Sum() != calculateMd5Sum(localFilePath))
     {
         // Files are different
         qInfo() << localFilePath << "is out of sync to the file on Google Drive. It does need to be synced.";
 
-        m_state = State::OUTOFSYNC;
-        Q_EMIT stateChanged(m_state);
+        setState(State::OUTOFSYNC);
     }
     else
     {
@@ -76,8 +85,7 @@ void GoogleFileSync::analyze()
         qInfo() << localFilePath << "is identical to the file on Google Drive. It does not need to be synced.";
 
         m_progress = 100;
-        m_state = State::SYNCED;
-        Q_EMIT stateChanged(m_state);
+        setState(State::SYNCED);
         Q_EMIT completed();
     }
 }
@@ -101,8 +109,7 @@ void GoogleFileSync::synchronize()
         connect(m_pDownload, &GoogleFileDownload::progress, this, &GoogleFileSync::onProgressChanged);
         // connect(m_pDownload, &GoogleFileDownload::failed, ...);
 
-        m_state = State::SYNCING;
-        Q_EMIT stateChanged(m_state);
+        setState(State::SYNCING);
 
         m_progress = 0;
         Q_EMIT progressChanged(m_progress);
@@ -122,8 +129,7 @@ void GoogleFileSync::onDownloadComplete()
     delete m_pDownload;
     m_pDownload = nullptr;
 
-    m_state = State::SYNCED;
-    Q_EMIT stateChanged(m_state);
+    setState(State::SYNCED);
     Q_EMIT completed();
 }
 

@@ -17,8 +17,10 @@ public:
 
     bool hasToken() const;
 
+    bool loadToken();
+
 public Q_SLOTS:
-    void startAuthentication();
+    void grant();
 
 Q_SIGNALS:
     void started();
@@ -30,8 +32,6 @@ private slots:
     void onError(const QString &error, const QString &errorDescription, const QUrl &uri);
 
     void saveToken();
-
-    bool loadToken();
 
 private:
     QOAuth2AuthorizationCodeFlow m_oauth;

@@ -52,6 +52,9 @@ bool StatusFilterProxyModel::filterAcceptsRow(int sourceRow, const QModelIndex &
     FilterStateFlag fileFilterFlag = FilterStateFlag::FilterUnknown;
     switch (fileState)
     {
+    case GoogleFileSync::State::ANALYZING:
+        fileFilterFlag = FilterStateFlag::FilterAnalyzing;
+        break;
     case GoogleFileSync::State::OUTOFSYNC:
         fileFilterFlag = FilterStateFlag::FilterNeedsSyncing;
         break;

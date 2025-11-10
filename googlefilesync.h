@@ -19,11 +19,13 @@ public:
     enum State
     {
         UNKNOWN,
+        ANALYZING,
         OUTOFSYNC,
         SYNCING,
         SYNCED
     };
     State state() const;
+    void setState(State s);
 
     int progress() const;
 

@@ -13,13 +13,14 @@ public:
     // 1. Define the unique flag values (powers of 2)
     enum FilterStateFlag {
         FilterNone = 0x0,
-        FilterSyncing = 0x1,
-        FilterSynced = 0x2,
-        FilterNeedsSyncing = 0x4, // Assuming this maps to GoogleFileSync::UNKNOWN
-        FilterUnknown = 0x8,
+        FilterAnalyzing = 0x1,
+        FilterSyncing = 0x2,
+        FilterSynced = 0x4,
+        FilterNeedsSyncing = 0x8,
+        FilterUnknown = 0x10,
 
         // Convenience flag: FilterAll is the combination of all possible sync states
-        FilterAll = FilterSyncing | FilterSynced | FilterNeedsSyncing | FilterUnknown
+        FilterAll = FilterSyncing | FilterSynced | FilterNeedsSyncing | FilterUnknown | FilterAnalyzing
     };
     Q_DECLARE_FLAGS(FilterState, FilterStateFlag) // Declare the QFlags type
     Q_FLAG(FilterState) // Register the new QFlags type with the meta-object system

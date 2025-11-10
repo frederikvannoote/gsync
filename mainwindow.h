@@ -25,9 +25,6 @@ public:
                         QWidget *parent = nullptr);
     ~MainWindow();
 
-public Q_SLOTS:
-    void indicateAuthenticationStart();
-
 private:
     void createStatusBar();
     void createToolBar();
