@@ -44,6 +44,9 @@ jobs:
         run: type build\\conan_toolchain.cmake
         shell: powershell
 
+      - name: Setup Qt
+        uses: jurplel/install-qt@v2
+
       - name: Configure CMake
         run: cmake -S .. -B . -G "Visual Studio 17 2022" -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}\\build\\conan_toolchain.cmake" -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         working-directory: build
