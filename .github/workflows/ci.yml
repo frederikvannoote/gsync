@@ -30,6 +30,9 @@ jobs:
       - name: Create build dir
         run: mkdir build
 
+      - name: Ensure Conan profile
+        run: conan profile detect
+
       - name: Conan install
         run: conan install .. --output-folder=build --profile:host=default -s build_type=${{ matrix.build_type }} --build=missing
         working-directory: build
@@ -72,6 +75,9 @@ jobs:
 
       - name: Create build dir
         run: mkdir build
+
+      - name: Ensure Conan profile
+        run: conan profile detect
 
       - name: Conan install
         run: conan install .. --output-folder=build -s build_type=${{ matrix.build_type }} --build=missing
