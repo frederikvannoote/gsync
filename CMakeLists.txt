@@ -18,7 +18,6 @@ qt_add_executable(GSync
         main.cpp
         googleauthenticator.h googleauthenticator.cpp
         googledrive.h googledrive.cpp
-        googlefile.h googlefile.cpp
         googlefilelist.h googlefilelist.cpp
         googlesync.h googlesync.cpp
         googlefilesync.h googlefilesync.cpp
@@ -28,13 +27,12 @@ qt_add_executable(GSync
         fileanalyzerunnable.h fileanalyzerunnable.cpp
         googlesyncdata.h googlesyncdata.cpp
         mainwindow.h mainwindow.cpp mainwindow.ui
-        statusfilterproxymodel.h statusfilterproxymodel.cpp
-        syncfile.h syncfile.cpp
-        syncfiledata.h syncfiledata.cpp
-        storageformat.h)
+        statusfilterproxymodel.h statusfilterproxymodel.cpp)
 
 target_link_libraries(GSync PRIVATE Qt6::Widgets)
 target_link_libraries(GSync PRIVATE Qt6::Core)
 target_link_libraries(GSync PRIVATE Qt6::NetworkAuth)
+target_link_libraries(GSync PRIVATE gsync_lib)
 
+add_subdirectory(lib)
 add_subdirectory(i18n)
