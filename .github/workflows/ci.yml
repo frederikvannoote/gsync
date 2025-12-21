@@ -47,7 +47,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
-          modules: qt6-base, qt6-networkauth
+          modules: qtnetworkauth
           cache: true
 
       - name: Qt diagnostics
