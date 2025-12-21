@@ -4,6 +4,8 @@ add_library(gsync_lib STATIC
     syncfiledata.h syncfiledata.cpp
     googlefile.h googlefile.cpp
     storageformat.h
+    encryption.h encryption_stub.cpp
+    keymanager.h keymanager_stub.cpp
 )
 
 # Public include directory so dependents can include headers as <syncfile.h>
