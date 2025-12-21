@@ -1,0 +1,9 @@
+[requires]
+libsodium/1.0.18
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[options]
+# (no custom options required for basic usage)
