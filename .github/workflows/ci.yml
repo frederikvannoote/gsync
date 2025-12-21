@@ -34,7 +34,7 @@ jobs:
         run: conan profile detect
 
       - name: Conan install
-        run: conan install .. --output-folder=build --profile:host=default -s compiler.version=193 -s compiler.runtime=dynamic -s build_type=${{ matrix.build_type }} --build=missing
+        run: conan install .. --output-folder=. --profile:host=default -s compiler.version=193 -s compiler.runtime=dynamic -s build_type=${{ matrix.build_type }} --build=missing
         working-directory: build
 
       - name: List build dir
