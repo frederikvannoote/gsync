@@ -35,4 +35,5 @@ target_link_libraries(GSync PRIVATE Qt6::NetworkAuth)
 target_link_libraries(GSync PRIVATE gsync_lib)
 
 add_subdirectory(lib)
+add_subdirectory(filemanager)
 add_subdirectory(i18n)
