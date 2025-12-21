@@ -33,14 +33,8 @@ jobs:
       - name: Ensure Conan profile
         run: conan profile detect
 
-      - name: Pin MSVC compiler version for CI (workaround)
-        run: |
-          conan profile update settings.compiler.version=193 default
-          conan profile update settings.compiler.runtime=dynamic default
-          conan profile show default
-
       - name: Conan install
-        run: conan install .. --output-folder=build --profile:host=default -s build_type=${{ matrix.build_type }} --build=missing
+        run: conan install .. --output-folder=build --profile:host=default -s settings.compiler.version=193 -s settings.compiler.runtime=dynamic -s build_type=${{ matrix.build_type }} --build=missing
         working-directory: build
 
       - name: List build dir
