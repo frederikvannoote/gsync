@@ -3,6 +3,8 @@
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QFileInfo>
+#include <QCryptographicHash>
 
 
 SyncFile::SyncFile(const QString &fileId,
@@ -75,6 +77,152 @@ SyncFile SyncFile::fromFile(const GoogleFile &file)
                     file.md5Sum(),
                     file.lastModified(),
                     StorageFormat::RAW);
+}
+
+SyncFile SyncFile::fromFile(const QString &file)
+{
+    QFile source(file);
+    if (!source.open(QIODevice::ReadOnly)) {
+        qWarning() << "Could not open .gsync file:" << source.errorString();
+        return SyncFile(QString(), QString(), QString(), QDateTime(), StorageFormat::RAW);
+    }
+
+    const QByteArray separator = "---END-OF-HEADER---\r\n";
+    QByteArray buffer;
+    QByteArray headerBytes;
+    const qint64 chunkSize = 8192;
+    while (!source.atEnd()) {
+        buffer = source.read(chunkSize);
+        headerBytes.append(buffer);
+        int idx = headerBytes.indexOf(separator);
+        if (idx != -1) {
+            QByteArray jsonBytes = headerBytes.left(idx);
+            QJsonDocument doc = QJsonDocument::fromJson(jsonBytes);
+            if (!doc.isObject()) {
+                qWarning() << "Invalid header JSON in .gsync file";
+                source.close();
+                return SyncFile(QString(), QString(), QString(), QDateTime(), StorageFormat::RAW);
+            }
+            QJsonObject obj = doc.object();
+            QString id = obj.value("id").toString();
+            QString name = obj.value("name").toString();
+            QString md5 = obj.value("md5sum").toString();
+            QDateTime lastModified = QDateTime::fromString(obj.value("lastModified").toString(), Qt::ISODate);
+            QString sf = obj.value("storageFormat").toString();
+            StorageFormat format = StorageFormat::RAW;
+            if (sf == "RAW") format = StorageFormat::RAW;
+            SyncFile s(id, name, md5, lastModified, format);
+            s.d->gsyncPath = file;
+            QFileInfo fi(file);
+            s.d->size = static_cast<int>(fi.size());
+            source.close();
+            return s;
+        }
+        if (headerBytes.size() > 1024 * 1024) {
+            qWarning() << "Header too large in .gsync file";
+            break;
+        }
+    }
+    source.close();
+    return SyncFile(QString(), QString(), QString(), QDateTime(), StorageFormat::RAW);
+}
+
+bool SyncFile::restore(const QString &toFile)
+{
+    if (d->gsyncPath.isEmpty()) {
+        qWarning() << "No .gsync source path available for restore";
+        return false;
+    }
+
+    QFile source(d->gsyncPath);
+    if (!source.open(QIODevice::ReadOnly)) {
+        qWarning() << "Could not open .gsync source file:" << source.errorString();
+        return false;
+    }
+
+    const QByteArray separator = "---END-OF-HEADER---\r\n";
+    QByteArray buffer;
+    QByteArray headerBytes;
+    const qint64 chunkSize = 8192;
+    qint64 headerEnd = -1;
+
+    while (!source.atEnd()) {
+        buffer = source.read(chunkSize);
+        headerBytes.append(buffer);
+        headerEnd = headerBytes.indexOf(separator);
+        if (headerEnd != -1) {
+            break;
+        }
+        if (headerBytes.size() > 1024 * 1024) {
+            qWarning() << "Header too large in .gsync file";
+            source.close();
+            return false;
+        }
+    }
+
+    if (headerEnd == -1) {
+        qWarning() << "Missing header separator in .gsync file";
+        source.close();
+        return false;
+    }
+
+    qint64 bodyStart = headerEnd + separator.size();
+
+    QFile destination(toFile);
+    if (!destination.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        qWarning() << "Could not open destination file for restore:" << destination.errorString();
+        source.close();
+        return false;
+    }
+
+    // Write any already read bytes that belong to the body
+    QByteArray bodyChunk = headerBytes.mid(bodyStart);
+    if (!bodyChunk.isEmpty()) {
+        qint64 written = destination.write(bodyChunk);
+        if (written != bodyChunk.size()) {
+            qWarning() << "Failed to write initial body chunk during restore";
+            source.close();
+            destination.close();
+            return false;
+        }
+    }
+
+    // Continue streaming the remaining data
+    while (!source.atEnd()) {
+        buffer = source.read(chunkSize);
+        if (buffer.isEmpty()) break;
+        qint64 written = destination.write(buffer);
+        if (written != buffer.size()) {
+            qWarning() << "Error writing to destination during restore";
+            source.close();
+            destination.close();
+            return false;
+        }
+    }
+
+    source.close();
+    destination.close();
+
+    // Verify MD5 if provided
+    if (!d->md5Sum.isEmpty()) {
+        QFile verify(toFile);
+        if (verify.open(QIODevice::ReadOnly)) {
+            QCryptographicHash hash(QCryptographicHash::Md5);
+            while (!verify.atEnd()) {
+                buffer = verify.read(chunkSize);
+                hash.addData(buffer);
+            }
+            verify.close();
+            QByteArray computed = hash.result().toHex();
+            if (computed != d->md5Sum.toUtf8()) {
+                qWarning() << "MD5 mismatch after restore" << computed << d->md5Sum.toUtf8();
+                return false;
+            }
+        }
+    }
+
+    qDebug() << "Restore completed for" << toFile;
+    return true;
 }
 
 bool SyncFile::store(const QString &fromFile)

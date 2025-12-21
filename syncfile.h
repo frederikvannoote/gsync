@@ -33,8 +33,18 @@ public:
     static SyncFile fromFile(const GoogleFile &file);
 
 public Q_SLOTS:
+    /**
+     * @brief Store the SyncFile's data into a *.gsync file 
+     * @param fromFile The source file path from which the data will be stored.
+     * @return true if the restoration was successful, false otherwise.
+     */
     bool store(const QString &fromFile);
-    // void restore();
+    /** 
+     * @brief Restore the SyncFile's data from a *.gsync file into a given file path.
+     * @param toFile The destination file path where the data will be restored.
+     * @return true if the restoration was successful, false otherwise.
+     */
+    bool restore(const QString &toFile);
 
 signals:
 
