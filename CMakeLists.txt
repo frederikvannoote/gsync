@@ -28,7 +28,10 @@ qt_add_executable(GSync
         fileanalyzerunnable.h fileanalyzerunnable.cpp
         googlesyncdata.h googlesyncdata.cpp
         mainwindow.h mainwindow.cpp mainwindow.ui
-        statusfilterproxymodel.h statusfilterproxymodel.cpp)
+        statusfilterproxymodel.h statusfilterproxymodel.cpp
+        syncfile.h syncfile.cpp
+        syncfiledata.h syncfiledata.cpp
+        storageformat.h)
 
 target_link_libraries(GSync PRIVATE Qt6::Widgets)
 target_link_libraries(GSync PRIVATE Qt6::Core)

@@ -11,6 +11,7 @@
 #include "googledrive.h"
 #include "googlefilelist.h"
 #include "googlesync.h"
+#include "syncfile.h"
 
 
 int main(int argc, char *argv[])
@@ -55,7 +56,7 @@ int main(int argc, char *argv[])
         auth.grant();
     }
 
-    // Ask where it needs to synchronize to.
+    // Ask where it needs to synchronize to and start file discovery
     {
         QSettings settings(QSettings::Format::IniFormat, QSettings::Scope::UserScope, "GSync");
         const QString destination = QFileDialog::getExistingDirectory(nullptr,
@@ -106,6 +107,22 @@ int main(int argc, char *argv[])
             file.setPath(path);
 
             sync.add(file);
+        }
+    }
+
+    QMap<QString, SyncFile> syncFiles;
+    for (GoogleFileSync * file: sync.files())
+    {
+        const QString localPath = file->localFilePath();
+        qDebug() << "File:" << file->file().name() << file->file().id() << file->localFileDir() << localPath;
+        if (!localPath.isEmpty() && QFile::exists(file->localFilePath()))
+        {
+            SyncFile sf = SyncFile::fromFile(file->file());
+            syncFiles.insert(sf.fileId(), sf);
+
+            bool s = sf.store(localPath);
+            if (s)
+                QFile::remove(localPath);
         }
     }
 

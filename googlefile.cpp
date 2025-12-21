@@ -16,6 +16,8 @@ public:
     QStringList parents; // Array of parent folder IDs
     QString mimeType;    // Mime type (e.g., 'image/jpeg' or 'application/vnd.google-apps.folder')
     QString path;
+    QDateTime lastModified;
+    int size;
 
     GoogleFilePrivate() = default;
     // The copy constructor is needed for QSharedData, but can be defaulted.
@@ -33,7 +35,7 @@ GoogleFile::GoogleFile() : d(new GoogleFilePrivate)
     d->valid = false;
 }
 
-GoogleFile::GoogleFile(const QString &id, const QString &name, const QString &md5sum, const QStringList &parents, const QString &type):
+GoogleFile::GoogleFile(const QString &id, const QString &name, const QString &md5sum, const QStringList &parents, const QString &type, const QDateTime &lastModified, int size):
     d(new GoogleFilePrivate)
 {
     d->valid = true;
@@ -42,6 +44,8 @@ GoogleFile::GoogleFile(const QString &id, const QString &name, const QString &md
     d->md5Sum = md5sum;
     d->parents = parents;
     d->mimeType = type;
+    d->lastModified = lastModified;
+    d->size = size;
 }
 
 /**
@@ -83,6 +87,8 @@ QString GoogleFile::md5Sum() const { return d->md5Sum; }
 QStringList GoogleFile::parents() const { return d->parents; }
 QString GoogleFile::type() const { return d->mimeType; }
 QString GoogleFile::path() const { return d->path; }
+QDateTime GoogleFile::lastModified() const { return d->lastModified; }
+int GoogleFile::size() const { return d->size; }
 
 // --- Setters (Modify access - Triggers Copy-on-Write) ---
 

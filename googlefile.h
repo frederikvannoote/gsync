@@ -3,6 +3,7 @@
 #include <QString>
 #include <QStringList>
 #include <QSharedDataPointer>
+#include <qdatetime.h>
 class GoogleFilePrivate;
 
 
@@ -20,7 +21,9 @@ public:
                const QString &name,
                const QString &md5sum,
                const QStringList &parents,
-               const QString &type);
+               const QString &type,
+               const QDateTime &lastModified,
+               int size);
     // Copy Constructor and Assignment Operator are provided by QSharedDataPointer
     // The PIMPL class is deep-copied only when modifications are made (Copy-on-Write).
     ~GoogleFile();
@@ -36,6 +39,8 @@ public:
     QStringList parents() const;
     QString type() const; // Maps to mimeType internally
     QString path() const;
+    QDateTime lastModified() const;
+    int size() const;
 
     // --- Setters (Triggers Copy-on-Write if data is shared) ---
     void setId(const QString &newId);

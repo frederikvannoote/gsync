@@ -74,7 +74,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="34"/>
-        <location filename="../mainwindow.cpp" line="95"/>
+        <location filename="../mainwindow.cpp" line="98"/>
         <source>Filters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -109,12 +109,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="64"/>
+        <location filename="../mainwindow.cpp" line="67"/>
         <source>Running syncs: %1</source>
         <translation type="unfinished">Sincronizações em execução: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="67"/>
+        <location filename="../mainwindow.cpp" line="70"/>
         <source>%1 files to analyze</source>
         <translation type="unfinished">Arquivos %1 para analisar</translation>
     </message>
@@ -130,33 +130,33 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../main.cpp" line="52"/>
+        <location filename="../main.cpp" line="53"/>
         <source>Welcome to GSync</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="53"/>
+        <location filename="../main.cpp" line="54"/>
         <source>To configure GSync, you need to start by authenticating to your Google Drive. Select the account which you would like to sync.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="62"/>
+        <location filename="../main.cpp" line="63"/>
         <source>Choose directory where to sync to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="70"/>
-        <location filename="../main.cpp" line="74"/>
+        <location filename="../main.cpp" line="71"/>
+        <location filename="../main.cpp" line="75"/>
         <source>Found %1 files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="72"/>
+        <location filename="../main.cpp" line="73"/>
         <source>Discovering files in Google Drive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main.cpp" line="71"/>
+        <location filename="../main.cpp" line="72"/>
         <source>Cancel</source>
         <translation type="unfinished">Cancelar</translation>
     </message>

@@ -79,7 +79,7 @@ void GoogleDrive::retrieveFiles(const QString &pageToken)
     query.addQueryItem("pageSize", "1000");
     if (!pageToken.isEmpty())
         query.addQueryItem("pageToken", pageToken);
-    query.addQueryItem("fields", "nextPageToken, files(id, name, mimeType, size, md5Checksum, parents)");
+    query.addQueryItem("fields", "nextPageToken, files(id, name, mimeType, size, md5Checksum, parents, modifiedTime)");
     query.addQueryItem("corpora", "user");
     query.addQueryItem("q", "trashed=false");
     driveUrl.setQuery(query);
@@ -154,15 +154,19 @@ void GoogleDrive::onFileListReplyFinished(QNetworkReply *reply)
                     const QString name = file["name"].toString();
                     const QString md5Sum = file["md5Checksum"].toString();
                     const QString mimeType = file["mimeType"].toString();
+                    const int size = file["size"].toInt();
+                    const QDateTime lastModified = QDateTime::fromString(file["modifiedTime"].toString(), Qt::ISODate);
 
-                    GoogleFile gf(id, name, md5Sum, parents, mimeType);
+                    GoogleFile gf(id, name, md5Sum, parents, mimeType, lastModified, size);
                     m_files.add(gf);
 
                     qDebug() << "  - Name:" << name
                              << "| ID:" << id
                              << "| Type:" << mimeType
+                             << "| Size:" << size
                              << "| MD5Checksum:" << md5Sum
-                             << "| Parent:" << parentId;
+                             << "| Parent:" << parentId
+                             << "| Last modified:" << lastModified;
                 }
             } else {
                 qWarning() << "Response did not contain the 'files' array. Raw response:";
