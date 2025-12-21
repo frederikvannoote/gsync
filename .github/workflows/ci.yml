@@ -33,12 +33,22 @@ jobs:
       - name: Ensure Conan profile
         run: conan profile detect
 
+      - name: Pin MSVC compiler version for CI (workaround)
+        run: |
+          conan profile update settings.compiler.version=193 default
+          conan profile update settings.compiler.runtime=dynamic default
+          conan profile show default
+
       - name: Conan install
         run: conan install .. --output-folder=build --profile:host=default -s build_type=${{ matrix.build_type }} --build=missing
         working-directory: build
 
       - name: List build dir
         run: dir build
+
+      - name: Show toolchain file (diagnostic)
+        run: type build\\conan_toolchain.cmake
+        shell: powershell
 
       - name: Configure CMake
         run: cmake -S .. -B . -G "Visual Studio 17 2022" -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}\\build\\conan_toolchain.cmake" -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
