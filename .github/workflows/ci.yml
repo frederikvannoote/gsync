@@ -37,8 +37,11 @@ jobs:
         run: conan install .. --output-folder=build --profile:host=default -s build_type=${{ matrix.build_type }} --build=missing
         working-directory: build
 
+      - name: List build dir
+        run: dir build
+
       - name: Configure CMake
-        run: cmake .. -G "Visual Studio 17 2022" -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        run: cmake -S .. -B . -G "Visual Studio 17 2022" -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}\\build\\conan_toolchain.cmake" -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         working-directory: build
 
       - name: Build
@@ -83,8 +86,11 @@ jobs:
         run: conan install .. --output-folder=build -s build_type=${{ matrix.build_type }} --build=missing
         working-directory: build
 
+      - name: List build dir
+        run: ls -la build
+
       - name: Configure CMake
-        run: cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        run: cmake -S .. -B . -G Ninja -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/build/conan_toolchain.cmake" -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         working-directory: build
 
       - name: Build
