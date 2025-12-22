@@ -1,6 +1,8 @@
 #include <QtTest>
 #include "passworddialog.h"
+#include <QLineEdit>
 #include <QDialogButtonBox>
+#include <QPushButton>
 
 
 class TestPasswordDialog : public QObject
