@@ -50,13 +50,6 @@ jobs:
           modules: qtnetworkauth
           cache: true
 
-      - name: Qt diagnostics
-        run: |
-          Get-Command qmake -ErrorAction SilentlyContinue | ForEach-Object { $_.Source } || Write-Output "qmake not found"
-          qmake --version | Write-Output
-          Write-Output "CMAKE_PREFIX_PATH=$Env:CMAKE_PREFIX_PATH"
-        shell: powershell
-
       - name: Configure CMake
         run: cmake -S .. -B . -G "Visual Studio 17 2022" -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}\\build\\conan_toolchain.cmake" -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
         working-directory: build
