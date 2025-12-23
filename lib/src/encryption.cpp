@@ -1,3 +1,11 @@
+/**
+ * @file encryption.cpp
+ * @brief Implementation of encryption helpers used to stream encrypt/decrypt data.
+ *
+ * The implementation uses libsodium when available and provides chunked AEAD encryption
+ * with XChaCha20-Poly1305.
+ */
+
 #include "encryption.h"
 #include <QDebug>
 #include <QtGlobal>

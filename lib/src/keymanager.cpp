@@ -1,3 +1,8 @@
+/**
+ * @file keymanager.cpp
+ * @brief Implements key derivation helpers (Argon2 via libsodium or fallback).
+ */
+
 #include "keymanager.h"
 #include <QCryptographicHash>
 #include <QtGlobal>

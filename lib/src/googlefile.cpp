@@ -1,3 +1,8 @@
+/**
+ * @file googlefile.cpp
+ * @brief Implementation of the GoogleFile value object used to store Drive metadata.
+ */
+
 #include "googlefile.h"
 
 /**

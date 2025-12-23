@@ -1,0 +1,13 @@
+# Doxygen configuration generated as a minimal template for the GSync library
+PROJECT_NAME           = "GSync"
+OUTPUT_DIRECTORY       = "@CMAKE_BINARY_DIR@/docs"
+INPUT                  = "@CMAKE_CURRENT_SOURCE_DIR@"
+RECURSIVE              = NO
+FILE_PATTERNS          = *.h *.cpp
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+EXTRACT_ALL            = YES
+QUIET                  = YES
+# Reduce verbosity but still show warnings when building docs
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES

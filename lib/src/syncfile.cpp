@@ -1,3 +1,8 @@
+/**
+ * @file syncfile.cpp
+ * @brief Implementation of SyncFile helpers: parsing, store and restore of .gsync archives.
+ */
+
 #include "syncfile.h"
 #include "googlefile.h"
 #include <QFile>
