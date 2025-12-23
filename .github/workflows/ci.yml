@@ -28,7 +28,7 @@ jobs:
           key: ${{ runner.os }}-conan-${{ matrix.build_type }}-${{ hashFiles('**/conanfile.txt') }}
 
       - name: Create build dir
-        run: mkdir build
+        run: mkdir -p build
 
       - name: Ensure Conan profile
         run: conan profile detect
