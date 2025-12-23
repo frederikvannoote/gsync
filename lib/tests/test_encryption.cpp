@@ -14,6 +14,10 @@ private slots:
     void testEncryptDecryptWrongKey();
     void testDecryptTruncated();
     void testEncryptDecryptLargeChunking();
+    void testEmptyPlaintext();
+    void testHeaderCorruption();
+    void testHeaderVersionMismatch();
+    void testSmallChunkSize();
 };
 
 void TestEncryption::testKeyDerivation()
