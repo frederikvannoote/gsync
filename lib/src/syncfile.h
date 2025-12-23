@@ -35,6 +35,8 @@ public:
              const QString md5Sum,
              const QDateTime &lastModified,
              StorageFormat storageFormat,
+             const QByteArray &keyDerivationSalt = {},
+             const Encryption::Params &encryptionParams = {},
              QObject *parent = nullptr);
     ~SyncFile();
     SyncFile(const SyncFile& other);

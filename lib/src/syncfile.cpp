@@ -17,6 +17,8 @@ SyncFile::SyncFile(const QString &fileId,
          const QString md5Sum,
          const QDateTime &lastModified,
          StorageFormat storageFormat,
+         const QByteArray &keyDerivationSalt,
+         const Encryption::Params &encryptionParams,
          QObject *parent)
     : QObject(parent)
     , d(new SyncFileData())
@@ -26,6 +28,8 @@ SyncFile::SyncFile(const QString &fileId,
     d->md5Sum= md5Sum;
     d->lastModified = lastModified;
     d->storageFormat = storageFormat;
+    d->keyDerivationSalt = keyDerivationSalt;
+    d->encryptionParams = encryptionParams;
 }
 
 SyncFile::~SyncFile() = default;
@@ -81,7 +85,9 @@ SyncFile SyncFile::fromFile(const GoogleFile &file)
                     file.name(),
                     file.md5Sum(),
                     file.lastModified(),
-                    StorageFormat::RAW);
+                    StorageFormat::RAW, // Default to RAW for now, until encryption options are available in the UI
+                    {},
+                    {});
 }
 
 SyncFile SyncFile::fromFile(const QString &file)
@@ -115,8 +121,26 @@ SyncFile SyncFile::fromFile(const QString &file)
             QDateTime lastModified = QDateTime::fromString(obj.value("lastModified").toString(), Qt::ISODate);
             QString sf = obj.value("storageFormat").toString();
             StorageFormat format = StorageFormat::RAW;
-            if (sf == "RAW") format = StorageFormat::RAW;
-            SyncFile s(id, name, md5, lastModified, format);
+            if (sf == "RAW") {
+                format = StorageFormat::RAW;
+            } else if (sf == "ENCRYPTED") {
+                format = StorageFormat::ENCRYPTED;
+            }
+
+            QByteArray keyDerivationSalt;
+            Encryption::Params encryptionParams;
+
+            if (format == StorageFormat::ENCRYPTED) {
+                keyDerivationSalt = QByteArray::fromHex(obj.value("keyDerivationSalt").toString().toUtf8());
+                if (obj.contains("encryptionParams")) {
+                    QJsonObject encParamsObj = obj.value("encryptionParams").toObject();
+                    encryptionParams.chunkSize = encParamsObj.value("chunkSize").toInt(encryptionParams.chunkSize);
+                    encryptionParams.alg = encParamsObj.value("alg").toString(encryptionParams.alg);
+                    encryptionParams.chunked = encParamsObj.value("chunked").toBool(encryptionParams.chunked);
+                }
+            }
+
+            SyncFile s(id, name, md5, lastModified, format, keyDerivationSalt, encryptionParams);
             s.d->gsyncPath = file;
             QFileInfo fi(file);
             s.d->size = static_cast<int>(fi.size());
