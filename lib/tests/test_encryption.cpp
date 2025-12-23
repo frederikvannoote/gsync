@@ -218,5 +218,64 @@ void TestEncryption::testHeaderCorruption()
     QVERIFY(!Encryption::decryptStream(cipherIn, restoredOut, key, params));
 }
 
+void TestEncryption::testHeaderVersionMismatch()
+{
+    if (!Encryption::isAvailable()) QSKIP("Encryption backend not available; skipping header version mismatch test.");
+
+    QByteArray plaintext = "x";
+    QByteArray key = KeyManager::deriveKeyFromPassphrase(QStringLiteral("password"), QByteArray("salt"), 32);
+
+    QBuffer inBuf(&plaintext);
+    inBuf.open(QIODevice::ReadOnly);
+
+    QByteArray ciphertext;
+    QBuffer outBuf(&ciphertext);
+    outBuf.open(QIODevice::WriteOnly);
+
+    Encryption::Params params;
+    QVERIFY(Encryption::encryptStream(inBuf, outBuf, key, params));
+
+    // bump version byte
+    ciphertext[4] = 0x02;
+
+    QBuffer cipherIn(&ciphertext);
+    cipherIn.open(QIODevice::ReadOnly);
+    QByteArray restored;
+    QBuffer restoredOut(&restored);
+    restoredOut.open(QIODevice::WriteOnly);
+
+    QVERIFY(!Encryption::decryptStream(cipherIn, restoredOut, key, params));
+}
+
+void TestEncryption::testSmallChunkSize()
+{
+    if (!Encryption::isAvailable()) QSKIP("Encryption backend not available; skipping small chunk size test.");
+
+    QByteArray plaintext;
+    for (int i = 0; i < 1000; ++i) plaintext.append(char('a' + (i % 26)));
+
+    QByteArray key = KeyManager::deriveKeyFromPassphrase(QStringLiteral("password"), QByteArray("salt"), 32);
+
+    QBuffer inBuf(&plaintext);
+    inBuf.open(QIODevice::ReadOnly);
+
+    QByteArray ciphertext;
+    QBuffer outBuf(&ciphertext);
+    outBuf.open(QIODevice::WriteOnly);
+
+    Encryption::Params params;
+    params.chunkSize = 1;
+    QVERIFY(Encryption::encryptStream(inBuf, outBuf, key, params));
+
+    QBuffer cipherIn(&ciphertext);
+    cipherIn.open(QIODevice::ReadOnly);
+    QByteArray restored;
+    QBuffer restoredOut(&restored);
+    restoredOut.open(QIODevice::WriteOnly);
+
+    QVERIFY(Encryption::decryptStream(cipherIn, restoredOut, key, params));
+    QCOMPARE(restored, plaintext);
+}
+
 QTEST_MAIN(TestEncryption)
 #include "test_encryption.moc"
