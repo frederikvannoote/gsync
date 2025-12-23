@@ -65,3 +65,30 @@ jobs:
       - name: Run tests
         run: ctest -C ${{ matrix.build_type }} --output-on-failure
         working-directory: build
+
+
+  docs:
+    name: Build Doxygen docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Doxygen & Graphviz
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y doxygen graphviz
+
+      - name: Configure docs (CMake)
+        run: cmake -S lib/src -B build_docs
+
+      - name: Build docs
+        run: cmake --build build_docs --target docs
+
+      - name: Show generated docs
+        run: ls -la build_docs/docs || true
+
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs
+          path: build_docs/docs
