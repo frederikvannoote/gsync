@@ -105,10 +105,6 @@ bool Encryption::decryptStream(QIODevice &in, QIODevice &out, const QByteArray &
         return false;
     }
 
-    const unsigned char *keyPtr = reinterpret_cast<const unsigned char*>(key.constData());
-    qint64 total = -1;
-    qint64 processed = 0;
-
     // Read and validate header: magic (4 bytes), version (1 byte), chunkSize (uint32 LE)
     char magicBuf[4];
     if (in.read(magicBuf, 4) != 4) {
@@ -134,8 +130,9 @@ bool Encryption::decryptStream(QIODevice &in, QIODevice &out, const QByteArray &
         qWarning() << "Failed to read header chunk size";
         return false;
     }
+    
     quint32 headerChunkSize = qFromLittleEndian(cs_le);
-
+    const unsigned char *keyPtr = reinterpret_cast<const unsigned char*>(key.constData());
     qint64 total = -1;
     qint64 processed = 0;
 
