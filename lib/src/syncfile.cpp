@@ -5,11 +5,18 @@
 
 #include "syncfile.h"
 #include "googlefile.h"
+#include "encryption.h"
+#include "keymanager.h"
+
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QFileInfo>
 #include <QCryptographicHash>
+#include <QRandomGenerator>
+#ifdef HAVE_LIBSODIUM
+#include <sodium.h>
+#endif
 
 
 SyncFile::SyncFile(const QString &fileId,
@@ -271,49 +278,100 @@ bool SyncFile::store(const QString &fromFile)
         return false;
     }
 
-    // Write the header
+    // 3. Prepare header data
     QJsonObject header;
     header["id"] = d->fileId;
     header["name"] = d->fileName;
     header["md5sum"] = d->md5Sum;
     header["lastModified"] = d->lastModified.toString(Qt::ISODate);
     header["storageFormat"] = toString(d->storageFormat);
-    QJsonDocument d(header);
-    destinationFile.write(d.toJson(QJsonDocument::JsonFormat::Indented));
-    destinationFile.write("---END-OF-HEADER---\r\n");
 
-    // Define the buffer size (e.g., 8 KB)
-    const int bufferSize = 8192;
-    QByteArray buffer;
-
-    // 3. Loop: Read chunk by chunk and write to the destination
-    while (!sourceFile.atEnd()) {
-        // Read data into the QByteArray buffer (up to bufferSize)
-        buffer = sourceFile.read(bufferSize);
-
-        // Write the read data to the destination file
-        qint64 bytesWritten = destinationFile.write(buffer);
-
-        // Crucial: Check if a write error occurred
-        if (bytesWritten == -1) {
-            qWarning() << "Error writing to destination file:" << destinationFile.errorString();
+    QByteArray encryptionKey;
+    if (d->storageFormat == StorageFormat::ENCRYPTED) {
+        if (!Encryption::isAvailable()) {
+            qWarning() << "Encryption backend not available, cannot store file as encrypted.";
             sourceFile.close();
             destinationFile.close();
             return false;
         }
 
-        // Check if all bytes read were successfully written
-        if (bytesWritten != buffer.size()) {
-            qWarning() << "Not all bytes could be written (Possible disk space issue).";
+        // Generate a new salt for key derivation
+        QByteArray salt;
+        salt.resize(16);
+#ifdef HAVE_LIBSODIUM
+        if (sodium_init() < 0) {
+            qWarning() << "libsodium could not be initialized for salt generation.";
+            sourceFile.close();
+            destinationFile.close();
+            return false;
+        }
+        randombytes_buf(salt.data(), salt.size());
+#else
+        qWarning() << "libsodium not available, generating weak random salt.";
+        QRandomGenerator::global()->generate(salt.data(), salt.size());
+#endif
+
+        d->keyDerivationSalt = salt;
+        header["keyDerivationSalt"] = QString::fromLatin1(d->keyDerivationSalt.toHex());
+
+        // Store encryption parameters
+        QJsonObject encryptionParamsObj;
+        encryptionParamsObj["chunkSize"] = d->encryptionParams.chunkSize;
+        encryptionParamsObj["alg"] = d->encryptionParams.alg;
+        encryptionParamsObj["chunked"] = d->encryptionParams.chunked;
+        header["encryptionParams"] = encryptionParamsObj;
+
+        // TODO: Prompt user for passphrase here. For now, using a placeholder.
+        qWarning() << "Using placeholder passphrase for encryption!";
+        encryptionKey = KeyManager::deriveKeyFromPassphrase(QStringLiteral("CHANGEME"), d->keyDerivationSalt, 32);
+        if (encryptionKey.isEmpty()) {
+            qWarning() << "Failed to derive encryption key.";
             sourceFile.close();
             destinationFile.close();
             return false;
         }
     }
 
-    // 4. Close files and return success
+    // Write the header
+    QJsonDocument doc(header);
+    destinationFile.write(doc.toJson(QJsonDocument::JsonFormat::Indented));
+    destinationFile.write("---END-OF-HEADER---\r\n");
+
+    // Define the buffer size (e.g., 8 KB)
+    const int bufferSize = 8192;
+    QByteArray buffer;
+
+    // 4. Stream data
+    if (d->storageFormat == StorageFormat::ENCRYPTED) {
+        if (!Encryption::encryptStream(sourceFile, destinationFile, encryptionKey, d->encryptionParams)) {
+            qWarning() << "Encryption failed during store.";
+            sourceFile.close();
+            destinationFile.close();
+            return false;
+        }
+    } else {
+        // RAW format: direct copy
+        while (!sourceFile.atEnd()) {
+            buffer = sourceFile.read(bufferSize);
+            if (buffer.isEmpty() && sourceFile.error() != QFile::NoError) {
+                qWarning() << "Error reading from source file:" << sourceFile.errorString();
+                sourceFile.close();
+                destinationFile.close();
+                return false;
+            }
+            qint64 bytesWritten = destinationFile.write(buffer);
+            if (bytesWritten == -1 || bytesWritten != buffer.size()) {
+                qWarning() << "Error writing to destination file:" << destinationFile.errorString();
+                sourceFile.close();
+                destinationFile.close();
+                return false;
+            }
+        }
+    }
+
+    // 5. Close files and return success
     sourceFile.close();
     destinationFile.close();
-    qDebug() << "File successfully copied in chunks.";
+    qDebug() << "File successfully stored as" << toString(d->storageFormat);
     return true;
 }
