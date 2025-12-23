@@ -160,5 +160,63 @@ void TestEncryption::testEncryptDecryptLargeChunking()
     QCOMPARE(restored, plaintext);
 }
 
+void TestEncryption::testEmptyPlaintext()
+{
+    if (!Encryption::isAvailable()) QSKIP("Encryption backend not available; skipping empty plaintext test.");
+
+    QByteArray plaintext;
+    QByteArray key = KeyManager::deriveKeyFromPassphrase(QStringLiteral("password"), QByteArray("salt"), 32);
+
+    QBuffer inBuf(&plaintext);
+    inBuf.open(QIODevice::ReadOnly);
+
+    QByteArray ciphertext;
+    QBuffer outBuf(&ciphertext);
+    outBuf.open(QIODevice::WriteOnly);
+
+    Encryption::Params params;
+    QVERIFY(Encryption::encryptStream(inBuf, outBuf, key, params));
+    // Ciphertext should contain header only
+    QVERIFY(ciphertext.size() >= 9);
+
+    QBuffer cipherIn(&ciphertext);
+    cipherIn.open(QIODevice::ReadOnly);
+    QByteArray restored;
+    QBuffer restoredOut(&restored);
+    restoredOut.open(QIODevice::WriteOnly);
+
+    QVERIFY(Encryption::decryptStream(cipherIn, restoredOut, key, params));
+    QCOMPARE(restored.size(), 0);
+}
+
+void TestEncryption::testHeaderCorruption()
+{
+    if (!Encryption::isAvailable()) QSKIP("Encryption backend not available; skipping header corruption test.");
+
+    QByteArray plaintext = "data";
+    QByteArray key = KeyManager::deriveKeyFromPassphrase(QStringLiteral("password"), QByteArray("salt"), 32);
+
+    QBuffer inBuf(&plaintext);
+    inBuf.open(QIODevice::ReadOnly);
+
+    QByteArray ciphertext;
+    QBuffer outBuf(&ciphertext);
+    outBuf.open(QIODevice::WriteOnly);
+
+    Encryption::Params params;
+    QVERIFY(Encryption::encryptStream(inBuf, outBuf, key, params));
+
+    // Corrupt the magic header
+    ciphertext[0] ^= 0xFF;
+
+    QBuffer cipherIn(&ciphertext);
+    cipherIn.open(QIODevice::ReadOnly);
+    QByteArray restored;
+    QBuffer restoredOut(&restored);
+    restoredOut.open(QIODevice::WriteOnly);
+
+    QVERIFY(!Encryption::decryptStream(cipherIn, restoredOut, key, params));
+}
+
 QTEST_MAIN(TestEncryption)
 #include "test_encryption.moc"

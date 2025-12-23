@@ -33,6 +33,14 @@ bool Encryption::encryptStream(QIODevice &in, QIODevice &out, const QByteArray &
     }
 
     const unsigned char *keyPtr = reinterpret_cast<const unsigned char*>(key.constData());
+    // Write header: magic 'GSE1' (4 bytes), version (1 byte), chunkSize (uint32 LE)
+    const QByteArray magic = QByteArray::fromRawData("GSE1", 4);
+    quint8 version = 1;
+    quint32 cs_le = qToLittleEndian(static_cast<quint32>(params.chunkSize));
+    if (out.write(magic.constData(), magic.size()) != (qint64)magic.size()) return false;
+    if (out.write(reinterpret_cast<const char*>(&version), 1) != 1) return false;
+    if (out.write(reinterpret_cast<const char*>(&cs_le), sizeof(cs_le)) != (qint64)sizeof(cs_le)) return false;
+
     qint64 total = -1;
     if (in.isSequential() == false) {
         total = in.size();
@@ -93,6 +101,36 @@ bool Encryption::decryptStream(QIODevice &in, QIODevice &out, const QByteArray &
     qint64 total = -1;
     qint64 processed = 0;
 
+    // Read and validate header: magic (4 bytes), version (1 byte), chunkSize (uint32 LE)
+    char magicBuf[4];
+    if (in.read(magicBuf, 4) != 4) {
+        qWarning() << "Failed to read magic/header";
+        return false;
+    }
+    QByteArray magic = QByteArray::fromRawData(magicBuf, 4);
+    if (magic != QByteArray::fromRawData("GSE1", 4)) {
+        qWarning() << "Bad or unsupported magic header" << magic;
+        return false;
+    }
+    quint8 version = 0;
+    if (in.read(reinterpret_cast<char*>(&version), 1) != 1) {
+        qWarning() << "Failed to read header version";
+        return false;
+    }
+    if (version != 1) {
+        qWarning() << "Unsupported encryption format version" << version;
+        return false;
+    }
+    quint32 cs_le = 0;
+    if (in.read(reinterpret_cast<char*>(&cs_le), sizeof(cs_le)) != (qint64)sizeof(cs_le)) {
+        qWarning() << "Failed to read header chunk size";
+        return false;
+    }
+    quint32 headerChunkSize = qFromLittleEndian(cs_le);
+
+    qint64 total = -1;
+    qint64 processed = 0;
+
     while (!in.atEnd()) {
         // read 4-byte length
         quint32 le = 0;
@@ -105,7 +143,7 @@ bool Encryption::decryptStream(QIODevice &in, QIODevice &out, const QByteArray &
         quint32 ctLen = qFromLittleEndian(le);
         if (ctLen == 0) continue;
 
-        if (ctLen > static_cast<quint32>(params.chunkSize + TAG_BYTES)) {
+        if (ctLen > static_cast<quint32>(headerChunkSize + TAG_BYTES)) {
             qWarning() << "Chunk too large" << ctLen;
             return false;
         }
