@@ -211,36 +211,73 @@ bool SyncFile::restore(const QString &toFile)
         return false;
     }
 
-    // Write any already read bytes that belong to the body
-    QByteArray bodyChunk = headerBytes.mid(bodyStart);
-    if (!bodyChunk.isEmpty()) {
-        qint64 written = destination.write(bodyChunk);
-        if (written != bodyChunk.size()) {
-            qWarning() << "Failed to write initial body chunk during restore";
+    QByteArray decryptionKey;
+    if (d->storageFormat == StorageFormat::ENCRYPTED) {
+        if (!Encryption::isAvailable()) {
+            qWarning() << "Encryption backend not available, cannot restore encrypted file.";
             source.close();
             destination.close();
             return false;
         }
-    }
 
-    // Continue streaming the remaining data
-    while (!source.atEnd()) {
-        buffer = source.read(chunkSize);
-        if (buffer.isEmpty()) break;
-        qint64 written = destination.write(buffer);
-        if (written != buffer.size()) {
-            qWarning() << "Error writing to destination during restore";
+        if (d->keyDerivationSalt.isEmpty()) {
+            qWarning() << "Missing key derivation salt for encrypted file.";
             source.close();
             destination.close();
             return false;
+        }
+
+        // TODO: Prompt user for passphrase here. For now, using a placeholder.
+        qWarning() << "Using placeholder passphrase for decryption!";
+        decryptionKey = KeyManager::deriveKeyFromPassphrase(QStringLiteral("CHANGEME"), d->keyDerivationSalt, 32);
+        if (decryptionKey.isEmpty()) {
+            qWarning() << "Failed to derive decryption key.";
+            source.close();
+            destination.close();
+            return false;
+        }
+
+        // Decrypt from the bodyStart of the source file to the destination
+        source.seek(bodyStart);
+        if (!Encryption::decryptStream(source, destination, decryptionKey, d->encryptionParams)) {
+            qWarning() << "Decryption failed during restore.";
+            source.close();
+            destination.close();
+            return false;
+        }
+    } else {
+        // RAW format: direct copy
+        // Write any already read bytes that belong to the body
+        QByteArray bodyChunk = headerBytes.mid(bodyStart);
+        if (!bodyChunk.isEmpty()) {
+            qint64 written = destination.write(bodyChunk);
+            if (written != bodyChunk.size()) {
+                qWarning() << "Failed to write initial body chunk during restore";
+                source.close();
+                destination.close();
+                return false;
+            }
+        }
+
+        // Continue streaming the remaining data
+        while (!source.atEnd()) {
+            buffer = source.read(chunkSize);
+            if (buffer.isEmpty()) break;
+            qint64 written = destination.write(buffer);
+            if (written != buffer.size()) {
+                qWarning() << "Error writing to destination during restore";
+                source.close();
+                destination.close();
+                return false;
+            }
         }
     }
 
     source.close();
     destination.close();
 
-    // Verify MD5 if provided
-    if (!d->md5Sum.isEmpty()) {
+    // Verify MD5 if provided (only for RAW, encrypted has integrity check built-in)
+    if (d->storageFormat == StorageFormat::RAW && !d->md5Sum.isEmpty()) {
         QFile verify(toFile);
         if (verify.open(QIODevice::ReadOnly)) {
             QCryptographicHash hash(QCryptographicHash::Md5);
@@ -259,7 +296,6 @@ bool SyncFile::restore(const QString &toFile)
 
     qDebug() << "Restore completed for" << toFile;
     return true;
-}
 
 bool SyncFile::store(const QString &fromFile)
 {
