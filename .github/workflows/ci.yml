@@ -56,7 +56,7 @@ jobs:
       - name: Show CMake libsodium status
         run: |
           Write-Output "--- CMake variables ---"
-          cmake -LA -N -B . | Select-String -Pattern "sodium|libsodium" || Write-Output "(no sodium related variables found)"
+          cmake -LA -N -B . | Select-String -Pattern "sodium|libsodium" | Write-Output "(no sodium related variables found)"
         shell: powershell
       - name: Build
         run: cmake --build . --config ${{ matrix.build_type }}
